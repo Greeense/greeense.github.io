@@ -1,11 +1,16 @@
 ---
-layout: post
-title: "first post"
-category: dev
-comments: false
+title:  "github.io 블로그 시작하기"
+excerpt: "GitHub Blog 서비스인 github.io 블로그 시작하기로 했다."
+
+categories:
+  - Blog
+tags:
+  - Blog
 ---
 
-# 첫 포스트
-## 연습입니다
+GitHub Blog 서비스인 github.io 블로그 시작하기로 했다.
+GitHub Blog 서비스의 이름은 Pages이다.
 
-> 연습입니다 인용문쓰는 법이라네요
+Pages가 다른 블로그 플랫폼 보다 편한 것 같아서 마음에 든다.
+다른 사람들도 같이 많이 사용했으면 좋겠다는 생각이 든다.
+
