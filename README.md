@@ -1,6 +1,6 @@
 ## Welcome to GitHub Pages
 
-* [Practice](Practice/MDPratice.md)
+* [마크다운 연습](Practice/MDPratice.md)
 
 
 You can use the [editor on GitHub](https://github.com/Greeense/greeense.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
