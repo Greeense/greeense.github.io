@@ -1,40 +1,40 @@
-## Welcome to GitHub Pages
+#How to use Markdown?
 
-* [마크다운 연습](Practice/MDPratice.md)
+==========================
+Markdown
+-
+can be uses as follows.
+
+#### Blackquotes
+>Blackquotes1
+>>Sub Blackquotes2
+
+>####header + blackquotes
 
 
-You can use the [editor on GitHub](https://github.com/Greeense/greeense.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+###Code representation method
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+-----
 
-### Markdown
+"`var x = 0`"
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+var foo = "bar"
+<html></html>
 
-```markdown
-Syntax highlighted code block
+###List representation method
++ plus
+* star
+- hyphen
 
-# Header 1
-## Header 2
-### Header 3
+###Numeric list representation method
+1. num1
+1. num2
 
-- Bulleted
-- List
+## HyperLink
+[blog](naver.com)
 
-1. Numbered
-2. List
+First Header | Second Header
+-------------- | ----------------
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Greeense/greeense.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second colulmn
