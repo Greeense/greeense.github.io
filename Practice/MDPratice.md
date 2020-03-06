@@ -12,5 +12,5 @@
 #### 2020.03.06 마크다운 연습
 > 이미지는 `!`를 통해 첨부할 수 있다.
 
-![library](/Image/library.jpg)
+![library](/Image/library.png)
 
