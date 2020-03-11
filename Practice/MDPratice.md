@@ -27,11 +27,17 @@ git주소만 있으면 zip으로 만들어서 털어갈 수 있음!
 파이썬으로 봇생성하기--> http://redelmar.net/blog/?p=1102
 
 # #최종목적 파이썬으로 트위터 타임라인 크롤링하기/ 봇생성하기# 
+
 > python 타임라인 긁어오기
+
 https://rachelsdotcom.tistory.com/72
+
 > javaScript 타임라인 긁어오기
+
 https://kangys.tistory.com/20#.XmhtuKgzaUk
+
 > python 자습서
+
 https://docs.python.org/ko/3/tutorial/introduction.html
 
 
