@@ -39,3 +39,4 @@ git주소만 있으면 zip으로 만들어서 털어갈 수 있음!
 
 > [인프런 -- Java, Jsp 무료/무제한강의](https://www.inflearn.com/)
 
+> [지킬 블로그 구글검색엔진에 업로드](https://gmlwjd9405.github.io/2017/10/20/include-blog-in-a-GoogleSearchEngine.html)
