@@ -13,3 +13,6 @@
 
 ## html 작성확인
 > [Hello test html](Practice/hello.html)
+
+## MSG 프로젝트
+> [MSG 생성중](Practice/0401.jsp)
