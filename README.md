@@ -15,4 +15,6 @@
 > [Hello test html](Practice/hello.html)
 
 ## MSG 프로젝트
-> [MSG 생성중](Practice/0401.jsp)
+> [MSG 생성중 jsp 다운](Practice/0401.jsp)
+
+> [MSG 미리보기](Practice/0401.html)
