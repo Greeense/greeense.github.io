@@ -4,145 +4,135 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href='https://unpkg.com/@fullcalendar/core@4.4.0/main.min.css' rel='stylesheet' />
-<link href='https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.css' rel='stylesheet' />
-<link href='https://unpkg.com/@fullcalendar/timegrid@4.4.0/main.min.css' rel='stylesheet' />
-<link href='https://unpkg.com/@fullcalendar/list@4.4.0/main.min.css' rel='stylesheet' />
-<script src='https://unpkg.com/@fullcalendar/core@4.4.0/main.min.js'></script>
-<script src='https://unpkg.com/@fullcalendar/interaction@4.4.0/main.min.js'></script>
-<script src='https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.js'></script>
-<script src='https://unpkg.com/@fullcalendar/timegrid@4.4.0/main.min.js'></script>
-<script src='https://unpkg.com/@fullcalendar/list@4.4.0/main.min.js'></script>
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-	
-    
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-      },
-      defaultDate: new Date(),  //오늘날짜 킵
-      navLinks: true, // can click day/week names to navigate views
-      businessHours: true, // display business hours
-      editable: true,
-      locale:'ko',
-      events : [
-    	  {
-    		  //달력에 이벤트가 추가되면 여기가 추가된다
-    		  title: '해외여행',
-    		  start: '2020-04-01T10:00:00',
-    		  color: 'red'
-    	  }
-      ]
-      /*events: [
-         {
-          title: 'Business Lunch',
-          start: '2020-02-03T13:00:00',
-          constraint: 'businessHours'
-        },
-        
-        {
-          title: 'Meeting',
-          start: '2020-02-13T11:00:00',
-          constraint: 'availableForMeeting', // defined below
-          color: '#257e4a'
-        },
-        {
-          title: 'Conference',
-          start: '2020-02-18',
-          end: '2020-02-20'
-        },
-        {
-          title: 'Party',
-          start: '2020-02-29T20:00:00'
-        },
-
-        // areas where "Meeting" must be dropped
-        {
-          groupId: 'availableForMeeting',
-          start: '2020-02-11T10:00:00',
-          end: '2020-02-11T16:00:00',
-          rendering: 'background'
-        },
-        {
-          groupId: 'availableForMeeting',
-          start: '2020-02-13T10:00:00',
-          end: '2020-02-13T16:00:00',
-          rendering: 'background'
-        },
-
-        // red areas where no events can be dropped
-        {
-          start: '2020-02-24',
-          end: '2020-02-28',
-          overlap: false,
-          rendering: 'background',
-          color: '#ff9f89'
-        },
-        {
-          start: '2020-02-06',
-          end: '2020-02-08',
-          overlap: false,
-          rendering: 'background',
-          color: '#ff9f89'
-        }
-      ]
-    	  */
-    });
-
-    calendar.render();
-  });
-
-</script>
-<style>
-
-  body {
-    <!-- margin:0; -->
-    
-    margin: 40px 10px;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-    
-  }
-  
-  #title{
-  	width:300px;
-  	height:150px;
-  	background-color:blue;
-  	float:left;
-  }
-  #menu {
-  	width:300px;
-  	height:723px;
-  	background-color:green;
-  	float:left;
-  }
-  #calendar {
-    max-width: 900px;
-    margin: 0 auto;
-    background-color:gray;
-    display:inline-block;
-  }
-	
-  
-</style>
-
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	var today = new Date();
+	
+	//저번달
+	function prevCalendar() {
+		today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+		makeCalendar();
+	}
+	//다음달
+	function nextCalendar() {
+		today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+		makeCalendar();
+	}
+	
+	//달력생성
+	function makeCalendar(){
+		var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);//1
+		var lastDate =  new Date(today.getFullYear(), today.getMonth()+1, 0);//30
+		var day = today.getDay();
+		var textYM = document.getElementById("YM");
+		var tblCalendar = document.getElementById("calDate");
+		textYM.innerHTML = today.getFullYear()+"년 "+(today.getMonth()+1)+"월";
+		
+		while($(".date").length>0){
+				$(".date").remove();
+		}
+		
+		for(var i=0;i<firstDate.getDay();i++){
+			
+		}
+		/*
+		//보고있는 달력 삭제(다음달로 넘기면 이전것은 사라져야한다)
+		while(tblCalendar.rows.length > 0){
+			tblCalendar.deleteRow(tblCalendar.rows.length  - 1);
+		}
+		
+		var row = tblCalendar.insertRow(); //tr한단 생성
+		var cnt = 0;
+		
+		//1일 시작 칸 맞추기
+		for(var i=0;i<firstDate.getDay();i++){
+			var cell = row.insertCell();
+			cnt = cnt+1;
+		}
+		//1일부터 넣기
+		for(var i=1;i<=lastDate.getDate();i++){
+			cell = row.insertCell();
+			cell.innerHTML = i;
+			cnt = cnt+1;
+			if(cnt%7 == 0){
+				row = calDate.insertRow();
+			}
+			
+		}
+		*/
+	}
+</script>
+<style type="text/css">
+#HeaderTbl{
+	border-collapes: collapse;
+}
+#DayHeaderTbl {
+	border-collapes: collapse;
+}
+#DayHeaderTbl>thead>tr>th{
+	width:102px;
+	height:20px;
+	background-color:lightgray;
+}
+#DayContainer {
+	display:inline-block;
+	border:1px solid red;
+}
+#DayContainerTbl{
+	border-collapes: collapse;
+	width:100px;
+	border:1px solid black;
+}
+#date{
+
+}
+</style>
 </head>
 <body>
- 
- <div id="menu">
- 	<div id="title"><p>MSG</p></div>
- 	</br></br></br></br></br></br><p> menu </p>
- </div>
- <div id='calendar'></div>
- 
- 
- 
+	<div id = "Header">
+		<table id="HeaderTbl">
+			<tr>
+			<td><button onclick="prevCalendar()"> < </button></td>
+			<td id="YM" align="center" colspan="5"> yyyy년 MM월 </td>
+			<td><button onclick="nextCalendar()"> > </button></td>
+			</tr>
+		</table>
+	</div>
+	<div id = "DayHeader">
+		<table id = "DayHeaderTbl">
+			<thead>
+				<tr>
+					<th>일</th>
+					<th>월</th>
+					<th>화</th>
+					<th>수</th>
+					<th>목</th>
+					<th>금</th>
+					<th>토</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	
+	<div id = "MonthContainer">
+		
+		<div id = "WeekContainer">
+			<div id = "DayContainer">
+				<table id="DayContainerTbl">
+					<thead>
+						<td class="date" align="right">dd</td>
+					</thead>
+					<tbody id="">
+						
+					</tbody>					
+				</table>
+			</div>
+		</div>
+		
+	</div>
+	<script>
+	makeCalendar();
+	</script>
 </body>
 </html>
