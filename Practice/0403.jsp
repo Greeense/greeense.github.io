@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
+	//button id="" onclick="" <--이렇게하지말고 다 분리하기
 	var today = new Date();
 
 	//저번달
@@ -19,12 +20,13 @@
 		today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
 		makeCalendar();
 	}
-	//오늘날짜로가기
+	//오늘날짜로가기-> 오늘날짜 칸 찾기
 	function goToday() {
 		today = new Date();
-		alert(today.getMonth());
 		makeCalendar();
-	}
+		var date = today.getDate();
+		var todayDate = $('.week').$('.date').indexOf('date');
+	}	
 	//달력생성
 	function makeCalendar(){
 		var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);//1
@@ -33,9 +35,8 @@
 		var textYM = document.getElementById("YM");
 		var DayContainerTbl = document.getElementById("DayContainerTbl");
 		textYM.innerHTML = today.getFullYear()+"년 "+(today.getMonth()+1)+"월";
-				
-		
-		 //보고있는 달력 삭제(다음달로 넘기면 이전것은 사라져야한다)
+						
+		//보고있는 달력 삭제(다음달로 넘기면 이전것은 사라져야한다)
 		while(DayContainerTbl.rows.length > 0){
 			DayContainerTbl.deleteRow(DayContainerTbl.rows.length  - 1);
 		}
@@ -55,6 +56,7 @@
 			noTodo.style.visibility = "hidden";
 			cnt = cnt+1;
 		}
+		
 		//1일부터 넣기
 		for(var i=1;i<=lastDate.getDate();i++){
 			var cell1 = row1.insertCell();
@@ -72,13 +74,25 @@
 			}
 		}
 	}
+	//json으로 스케줄추가/수정/삭제
 </script>
 <style type="text/css">
+#todayDate{
+	background-color:black;
+}
 .week>.date:nth-child(1) {
 	color:red;
+	background-color:#FBB1BE;
 }
 .week>.date:nth-child(7) {
 	color:red;
+	background-color:#FBB1BE;
+}
+.weekTodo>.dateTodo:nth-child(1) {
+background-color:#E4DCDE;
+}
+.weekTodo>.dateTodo:nth-child(7) {
+background-color:#E4DCDE;
 }
 #HeaderTbl { 
 	border-collapse: collapse;
@@ -90,25 +104,30 @@
 	width:101px;
 	height:20px;
 	background-color:lightgray;
+	border-bottom:2px solid white;
 }
 #DayContainer{
 	width:auto;
 	height:auto;
+	border:1px solid white;
 }
 #DayContainerTbl {
 	border-collapse: collapse;
 	width:auto;
 	height:auto;
+	background-color:#F5F5F5;
+	
 }
 .week >td{
-	width:100px;
+	width:101px;
 	height:20px;
-	border-bottom:1px solid black;
+	background-color:white;
 }
 .weekTodo >td{
-	width:100px;
+	width:101px;
 	height:80px;
-	border-top:1px solid black;
+	border-top:1px dashed #FB9C87;
+	background-color:#F5F5F5;
 }
 </style>
 </head>
@@ -116,10 +135,10 @@
 	<div id = "Header">
 		<table id="HeaderTbl">
 			<tr>
-			<td><button onclick="prevCalendar()"> < </button></td>
+			<td><button id="prev" onclick="prevCalendar()"> < </button></td>
 			<td id="YM" align="center" colspan="5"> yyyy년 MM월 </td>
-			<td><button onclick="nextCalendar()"> > </button></td>
-			<td><button onclick="goToday">Today</button></td>
+			<td><button id="next" onclick="nextCalendar()"> > </button></td>
+			<td><button id="goToday" onclick="goToday()">Today</button></td>
 			</tr>
 		</table>
 	</div>
@@ -142,7 +161,7 @@
 		<div id = "WeekContainer">
 			<div id = "DayContainer">
 				<table id="DayContainerTbl"">
-					<tbody align="right">
+					<tbody align="center">
 						<!-- JSP로 날짜채움 -->
 					</tbody>
 				</table>
