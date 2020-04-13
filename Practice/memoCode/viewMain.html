@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Crownix Mirroring Viewer</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+		<meta http-equiv="cache-control" content="no-cache"/>
+		<script src="js/jquery-1.11.0.min.js"></script>
+		<script src="js/crownix-viewer.storage.min.js"></script>
+		<!--
+		<script src="js/crownix-viewer.min.js"></script>
+		-->
+		<link rel="stylesheet" type="text/css" href="css/crownix-viewer.min.css">
+
+		<style>
+			body{margin:0;padding: 0;}
+
+			ul{list-style-type: none;}
+
+			header{height: 45px;background: #d2d2d2;padding:0 20px;}
+
+			button{border:0;outline: 0;padding: 0;margin:0;background: rgba(0,0,0,0);cursor: pointer;width:100%;height: 100%;}
+
+			.left{float: left;font-size: 0;}
+
+			.left ul{margin:0;padding: 9px 0 10px;display: inline-block;}
+
+			.left ul li{float: left;margin-right:12px;}
+
+			.left ul li:last-child{margin-right: 0;}
+
+			.left ul li button#btnMoveFirst{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23545454%3Bstroke%3Atransparent%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M7.79%2C13.57l8.58%2C6.92a2%2C2%2C0%2C0%2C0%2C3.28-1.57V5.08a2%2C2%2C0%2C0%2C0-3.28-1.57L7.79%2C10.43A2%2C2%2C0%2C0%2C0%2C7.79%2C13.57Z%22%2F%3E%3Crect%20class%3D%22cls-1%22%20x%3D%224.35%22%20y%3D%223%22%20width%3D%223%22%20height%3D%2218%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.left ul li button#btnMoveFirst:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M7.79%2C13.57l8.58%2C6.92a2%2C2%2C0%2C0%2C0%2C3.28-1.57V5.08a2%2C2%2C0%2C0%2C0-3.28-1.57L7.79%2C10.43A2%2C2%2C0%2C0%2C0%2C7.79%2C13.57Z%22%2F%3E%3Crect%20class%3D%22cls-1%22%20x%3D%224.35%22%20y%3D%223%22%20width%3D%223%22%20height%3D%2218%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.left ul li button#btnMoveFirst:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M7.79%2C13.57l8.58%2C6.92a2%2C2%2C0%2C0%2C0%2C3.28-1.57V5.08a2%2C2%2C0%2C0%2C0-3.28-1.57L7.79%2C10.43A2%2C2%2C0%2C0%2C0%2C7.79%2C13.57Z%22%2F%3E%3Crect%20class%3D%22cls-1%22%20x%3D%224.35%22%20y%3D%223%22%20width%3D%223%22%20height%3D%2218%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;height: 25px;width:25px;}
+
+			.left ul li button#btnMovePrev{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23545454%3Bstroke%3Atransparent%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M6.45%2C13.57%2C15%2C20.49a2%2C2%2C0%2C0%2C0%2C3.28-1.57V5.08A2%2C2%2C0%2C0%2C0%2C15%2C3.51L6.45%2C10.43A2%2C2%2C0%2C0%2C0%2C6.45%2C13.57Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.left ul li button#btnMovePrev:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M6.45%2C13.57%2C15%2C20.49a2%2C2%2C0%2C0%2C0%2C3.28-1.57V5.08A2%2C2%2C0%2C0%2C0%2C15%2C3.51L6.45%2C10.43A2%2C2%2C0%2C0%2C0%2C6.45%2C13.57Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.left ul li button#btnMovePrev:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M6.45%2C13.57%2C15%2C20.49a2%2C2%2C0%2C0%2C0%2C3.28-1.57V5.08A2%2C2%2C0%2C0%2C0%2C15%2C3.51L6.45%2C10.43A2%2C2%2C0%2C0%2C0%2C6.45%2C13.57Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;height: 25px;width:25px;}
+
+			.left ul li button#btnMoveNext{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23545454%3Bstroke%3Atransparent%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M17.55%2C10.43%2C9%2C3.51A2%2C2%2C0%2C0%2C0%2C5.7%2C5.08V18.92A2%2C2%2C0%2C0%2C0%2C9%2C20.49l8.57-6.92A2%2C2%2C0%2C0%2C0%2C17.55%2C10.43Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.left ul li button#btnMoveNext:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M17.55%2C10.43%2C9%2C3.51A2%2C2%2C0%2C0%2C0%2C5.7%2C5.08V18.92A2%2C2%2C0%2C0%2C0%2C9%2C20.49l8.57-6.92A2%2C2%2C0%2C0%2C0%2C17.55%2C10.43Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.left ul li button#btnMoveNext:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M17.55%2C10.43%2C9%2C3.51A2%2C2%2C0%2C0%2C0%2C5.7%2C5.08V18.92A2%2C2%2C0%2C0%2C0%2C9%2C20.49l8.57-6.92A2%2C2%2C0%2C0%2C0%2C17.55%2C10.43Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;height: 25px;width:25px;}
+
+			.left ul li button#btnMoveLast{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23545454%3Bstroke%3Atransparent%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M16%2C10.46%2C7.62%2C3.55A2%2C2%2C0%2C0%2C0%2C4.35%2C5.09V18.91a2%2C2%2C0%2C0%2C0%2C3.27%2C1.54L16%2C13.54A2%2C2%2C0%2C0%2C0%2C16%2C10.46Z%22%2F%3E%3Crect%20class%3D%22cls-1%22%20x%3D%2216.41%22%20y%3D%223%22%20width%3D%222.94%22%20height%3D%2218%22%20transform%3D%22%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.left ul li button#btnMoveLast:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M16%2C10.46%2C7.62%2C3.55A2%2C2%2C0%2C0%2C0%2C4.35%2C5.09V18.91a2%2C2%2C0%2C0%2C0%2C3.27%2C1.54L16%2C13.54A2%2C2%2C0%2C0%2C0%2C16%2C10.46Z%22%2F%3E%3Crect%20class%3D%22cls-1%22%20x%3D%2216.41%22%20y%3D%223%22%20width%3D%222.94%22%20height%3D%2218%22%20transform%3D%22t%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.left ul li button#btnMoveLast:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M16%2C10.46%2C7.62%2C3.55A2%2C2%2C0%2C0%2C0%2C4.35%2C5.09V18.91a2%2C2%2C0%2C0%2C0%2C3.27%2C1.54L16%2C13.54A2%2C2%2C0%2C0%2C0%2C16%2C10.46Z%22%2F%3E%3Crect%20class%3D%22cls-1%22%20x%3D%2216.41%22%20y%3D%223%22%20width%3D%222.94%22%20height%3D%2218%22%20transform%3D%22%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;height: 25px;width:25px;}
+
+			.right{float: right;font-size: 0;margin-top:7px;height:31px;}
+
+			.right button#btnNextSign{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%230856a0%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M13.23%2C17.7a34.87%2C34.87%2C0%2C0%2C0%2C6.47-.48l.14%2C1.09a33.75%2C33.75%2C0%2C0%2C1-6.79.51H11.92V9.39h6.67v1.09H13.23Zm11.49-2.93H22.35v7.64H21V8h1.31v5.66h2.37Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M37.41%2C15v1.05h-13V15ZM36%2C11.06c0%2C1.7-1.93%2C2.7-5%2C2.7s-5-1-5-2.7%2C1.94-2.72%2C5-2.72S36%2C9.35%2C36%2C11.06Zm-.13%2C6.4v4.72H26V17.46Zm-8.61-6.4c0%2C1.06%2C1.43%2C1.68%2C3.7%2C1.68s3.7-.62%2C3.7-1.68-1.43-1.68-3.7-1.68S27.21%2C10%2C27.21%2C11.06Zm.1%2C7.44v2.63h7.23V18.5Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M42.57%2C11.83A7.16%2C7.16%2C0%2C0%2C0%2C46.29%2C18l-.77%2C1a7.69%2C7.69%2C0%2C0%2C1-3.6-4.55%2C8%2C8%2C0%2C0%2C1-3.57%2C4.8l-.8-1a7.58%2C7.58%2C0%2C0%2C0%2C3.71-6.46V9.25h1.31ZM49.38%2C8V22.39H48.06V14H44.73V12.88h3.33V8Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M57.87%2C15.48H51.32V9.11h6.55v1.24h3.3V8H62.5v8.49H61.17V14.24h-3.3Zm-1.28-5.32h-4v4.28h4Zm5.94%2C9.5c0%2C1.71-1.83%2C2.7-4.79%2C2.7s-4.77-1-4.77-2.7S54.8%2C17%2C57.74%2C17%2C62.53%2C17.93%2C62.53%2C19.66Zm-1.3%2C0c0-1.06-1.31-1.69-3.49-1.69s-3.45.63-3.45%2C1.69%2C1.31%2C1.68%2C3.45%2C1.68S61.23%2C20.71%2C61.23%2C19.66Zm-3.36-8.25v1.78h3.3V11.41Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;margin-right:5px}
+			.right button#btnNextSign:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M13.23%2C17.7a34.87%2C34.87%2C0%2C0%2C0%2C6.47-.48l.14%2C1.09a33.75%2C33.75%2C0%2C0%2C1-6.79.51H11.92V9.39h6.67v1.09H13.23Zm11.49-2.93H22.35v7.64H21V8h1.31v5.66h2.37Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M37.41%2C15v1.05h-13V15ZM36%2C11.06c0%2C1.7-1.93%2C2.7-5%2C2.7s-5-1-5-2.7%2C1.94-2.72%2C5-2.72S36%2C9.35%2C36%2C11.06Zm-.13%2C6.4v4.72H26V17.46Zm-8.61-6.4c0%2C1.06%2C1.43%2C1.68%2C3.7%2C1.68s3.7-.62%2C3.7-1.68-1.43-1.68-3.7-1.68S27.21%2C10%2C27.21%2C11.06Zm.1%2C7.44v2.63h7.23V18.5Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M42.57%2C11.83A7.16%2C7.16%2C0%2C0%2C0%2C46.29%2C18l-.77%2C1a7.69%2C7.69%2C0%2C0%2C1-3.6-4.55%2C8%2C8%2C0%2C0%2C1-3.57%2C4.8l-.8-1a7.58%2C7.58%2C0%2C0%2C0%2C3.71-6.46V9.25h1.31ZM49.38%2C8V22.39H48.06V14H44.73V12.88h3.33V8Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M57.87%2C15.48H51.32V9.11h6.55v1.24h3.3V8H62.5v8.49H61.17V14.24h-3.3Zm-1.28-5.32h-4v4.28h4Zm5.94%2C9.5c0%2C1.71-1.83%2C2.7-4.79%2C2.7s-4.77-1-4.77-2.7S54.8%2C17%2C57.74%2C17%2C62.53%2C17.93%2C62.53%2C19.66Zm-1.3%2C0c0-1.06-1.31-1.69-3.49-1.69s-3.45.63-3.45%2C1.69%2C1.31%2C1.68%2C3.45%2C1.68S61.23%2C20.71%2C61.23%2C19.66Zm-3.36-8.25v1.78h3.3V11.41Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnNextSign:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M13.23%2C17.7a34.87%2C34.87%2C0%2C0%2C0%2C6.47-.48l.14%2C1.09a33.75%2C33.75%2C0%2C0%2C1-6.79.51H11.92V9.39h6.67v1.09H13.23Zm11.49-2.93H22.35v7.64H21V8h1.31v5.66h2.37Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M37.41%2C15v1.05h-13V15ZM36%2C11.06c0%2C1.7-1.93%2C2.7-5%2C2.7s-5-1-5-2.7%2C1.94-2.72%2C5-2.72S36%2C9.35%2C36%2C11.06Zm-.13%2C6.4v4.72H26V17.46Zm-8.61-6.4c0%2C1.06%2C1.43%2C1.68%2C3.7%2C1.68s3.7-.62%2C3.7-1.68-1.43-1.68-3.7-1.68S27.21%2C10%2C27.21%2C11.06Zm.1%2C7.44v2.63h7.23V18.5Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M42.57%2C11.83A7.16%2C7.16%2C0%2C0%2C0%2C46.29%2C18l-.77%2C1a7.69%2C7.69%2C0%2C0%2C1-3.6-4.55%2C8%2C8%2C0%2C0%2C1-3.57%2C4.8l-.8-1a7.58%2C7.58%2C0%2C0%2C0%2C3.71-6.46V9.25h1.31ZM49.38%2C8V22.39H48.06V14H44.73V12.88h3.33V8Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M57.87%2C15.48H51.32V9.11h6.55v1.24h3.3V8H62.5v8.49H61.17V14.24h-3.3Zm-1.28-5.32h-4v4.28h4Zm5.94%2C9.5c0%2C1.71-1.83%2C2.7-4.79%2C2.7s-4.77-1-4.77-2.7S54.8%2C17%2C57.74%2C17%2C62.53%2C17.93%2C62.53%2C19.66Zm-1.3%2C0c0-1.06-1.31-1.69-3.49-1.69s-3.45.63-3.45%2C1.69%2C1.31%2C1.68%2C3.45%2C1.68S61.23%2C20.71%2C61.23%2C19.66Zm-3.36-8.25v1.78h3.3V11.41Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;width:76px;height:31px;}
+
+			.right button#btnSubmit{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%230856a0%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M28.64%2C12.07c0%2C2.49%2C1.07%2C5%2C3.06%2C6.11l-.8%2C1A6.86%2C6.86%2C0%2C0%2C1%2C28%2C15a7.4%2C7.4%2C0%2C0%2C1-3%2C4.55l-.8-1c2-1.2%2C3.12-3.81%2C3.12-6.45v-1.3H24.65V9.7H31.2v1.07H28.64Zm3.84-3.73h1.25V21.62H32.48V14.24H30.11V13.17h2.37ZM36.63%2C8V22.36H35.36V8Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M44.7%2C15.4v1.33h4.17v3.13H40.43v1.36H49.3v1H39.15v-3.3h8.42V17.7H39.1v-1h4.28V15.4H37.56v-1H50.51v1Zm-6.46-2.64c2.65-.18%2C4.85-1.06%2C5.07-2.49H38.88v-1h4.51V7.92H44.7V9.28h4.5v1H44.78c.23%2C1.43%2C2.39%2C2.31%2C5.06%2C2.49l-.4%2C1c-2.4-.19-4.51-.93-5.39-2.26-.88%2C1.33-3%2C2.07-5.43%2C2.26Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnSubmit:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M28.64%2C12.07c0%2C2.49%2C1.07%2C5%2C3.06%2C6.11l-.8%2C1A6.86%2C6.86%2C0%2C0%2C1%2C28%2C15a7.4%2C7.4%2C0%2C0%2C1-3%2C4.55l-.8-1c2-1.2%2C3.12-3.81%2C3.12-6.45v-1.3H24.65V9.7H31.2v1.07H28.64Zm3.84-3.73h1.25V21.62H32.48V14.24H30.11V13.17h2.37ZM36.63%2C8V22.36H35.36V8Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M44.7%2C15.4v1.33h4.17v3.13H40.43v1.36H49.3v1H39.15v-3.3h8.42V17.7H39.1v-1h4.28V15.4H37.56v-1H50.51v1Zm-6.46-2.64c2.65-.18%2C4.85-1.06%2C5.07-2.49H38.88v-1h4.51V7.92H44.7V9.28h4.5v1H44.78c.23%2C1.43%2C2.39%2C2.31%2C5.06%2C2.49l-.4%2C1c-2.4-.19-4.51-.93-5.39-2.26-.88%2C1.33-3%2C2.07-5.43%2C2.26Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnSubmit:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M28.64%2C12.07c0%2C2.49%2C1.07%2C5%2C3.06%2C6.11l-.8%2C1A6.86%2C6.86%2C0%2C0%2C1%2C28%2C15a7.4%2C7.4%2C0%2C0%2C1-3%2C4.55l-.8-1c2-1.2%2C3.12-3.81%2C3.12-6.45v-1.3H24.65V9.7H31.2v1.07H28.64Zm3.84-3.73h1.25V21.62H32.48V14.24H30.11V13.17h2.37ZM36.63%2C8V22.36H35.36V8Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M44.7%2C15.4v1.33h4.17v3.13H40.43v1.36H49.3v1H39.15v-3.3h8.42V17.7H39.1v-1h4.28V15.4H37.56v-1H50.51v1Zm-6.46-2.64c2.65-.18%2C4.85-1.06%2C5.07-2.49H38.88v-1h4.51V7.92H44.7V9.28h4.5v1H44.78c.23%2C1.43%2C2.39%2C2.31%2C5.06%2C2.49l-.4%2C1c-2.4-.19-4.51-.93-5.39-2.26-.88%2C1.33-3%2C2.07-5.43%2C2.26Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;width:76px;height:31px;}
+
+			.right button#btnPrint{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23279d4d%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M28.49%2C16.1a3.54%2C3.54%2C0%2C1%2C1%2C0-7.07%2C3.54%2C3.54%2C0%2C1%2C1%2C0%2C7.07Zm0-1.14A2.4%2C2.4%2C0%2C1%2C0%2C26%2C12.55%2C2.36%2C2.36%2C0%2C0%2C0%2C28.49%2C15Zm8.15%2C6v1.08H27V17.45h1.32V21Zm-.43-2.46H34.9V8h1.31Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M41.85%2C18a29.29%2C29.29%2C0%2C0%2C0%2C3-.27l.07%2C1a41.11%2C41.11%2C0%2C0%2C1-7.32.5l-.19-1.09c.9%2C0%2C2%2C0%2C3.24-.05v-3h1.24Zm2.29-2.77a5%2C5%2C0%2C0%2C1-2.89-2.75%2C5.38%2C5.38%2C0%2C0%2C1-3.08%2C3.09l-.65-1a4.43%2C4.43%2C0%2C0%2C0%2C3-4.08V9.17h1.32v1.25a4.14%2C4.14%2C0%2C0%2C0%2C2.92%2C3.76ZM49.62%2C8V22.38H48.37V15H46.64v6.59H45.41V8.34h1.23V14h1.73V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnPrint:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M28.49%2C16.1a3.54%2C3.54%2C0%2C1%2C1%2C0-7.07%2C3.54%2C3.54%2C0%2C1%2C1%2C0%2C7.07Zm0-1.14A2.4%2C2.4%2C0%2C1%2C0%2C26%2C12.55%2C2.36%2C2.36%2C0%2C0%2C0%2C28.49%2C15Zm8.15%2C6v1.08H27V17.45h1.32V21Zm-.43-2.46H34.9V8h1.31Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M41.85%2C18a29.29%2C29.29%2C0%2C0%2C0%2C3-.27l.07%2C1a41.11%2C41.11%2C0%2C0%2C1-7.32.5l-.19-1.09c.9%2C0%2C2%2C0%2C3.24-.05v-3h1.24Zm2.29-2.77a5%2C5%2C0%2C0%2C1-2.89-2.75%2C5.38%2C5.38%2C0%2C0%2C1-3.08%2C3.09l-.65-1a4.43%2C4.43%2C0%2C0%2C0%2C3-4.08V9.17h1.32v1.25a4.14%2C4.14%2C0%2C0%2C0%2C2.92%2C3.76ZM49.62%2C8V22.38H48.37V15H46.64v6.59H45.41V8.34h1.23V14h1.73V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnPrint:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M28.49%2C16.1a3.54%2C3.54%2C0%2C1%2C1%2C0-7.07%2C3.54%2C3.54%2C0%2C1%2C1%2C0%2C7.07Zm0-1.14A2.4%2C2.4%2C0%2C1%2C0%2C26%2C12.55%2C2.36%2C2.36%2C0%2C0%2C0%2C28.49%2C15Zm8.15%2C6v1.08H27V17.45h1.32V21Zm-.43-2.46H34.9V8h1.31Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M41.85%2C18a29.29%2C29.29%2C0%2C0%2C0%2C3-.27l.07%2C1a41.11%2C41.11%2C0%2C0%2C1-7.32.5l-.19-1.09c.9%2C0%2C2%2C0%2C3.24-.05v-3h1.24Zm2.29-2.77a5%2C5%2C0%2C0%2C1-2.89-2.75%2C5.38%2C5.38%2C0%2C0%2C1-3.08%2C3.09l-.65-1a4.43%2C4.43%2C0%2C0%2C0%2C3-4.08V9.17h1.32v1.25a4.14%2C4.14%2C0%2C0%2C0%2C2.92%2C3.76ZM49.62%2C8V22.38H48.37V15H46.64v6.59H45.41V8.34h1.23V14h1.73V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;width:76px;height:31px;}
+
+			/* .right button#btnClose:enabled{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23808080%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnClose:disabled{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23808080%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnClose:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnClose:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;width:76px;height:31px;} */
+
+			.right button#btnClose:enabled{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23808080%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;margin-left:20px;}
+			.right button#btnClose:disabled{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23808080%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;margin-left:20px;}
+			.right button#btnClose:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;margin-left:20px;}
+			.right button#btnClose:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;width:76px;height:31px;margin-left:20px;}
+
+			.right button#btnResend{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23005bac%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M22.11%2C11.91c0%2C2.62%2C1%2C4.94%2C3.07%2C6l-.76%2C1A6.44%2C6.44%2C0%2C0%2C1%2C21.5%2C15a6.72%2C6.72%2C0%2C0%2C1-3%2C4.38l-.8-1c2.05-1.15%2C3.13-3.6%2C3.13-6.51V10.79H18.06V9.71h6.66v1.08H22.11Zm8-3.91V22.38H28.85V14.9H27v6.77H25.73V8.34H27v5.47h1.89V8Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M38.8%2C16.39a6%2C6%2C0%2C0%2C1-3.46-3.25%2C6.11%2C6.11%2C0%2C0%2C1-3.62%2C3.57l-.68-1A5.23%2C5.23%2C0%2C0%2C0%2C34.65%2C11v-.72h-3.2V9.19h7.67v1.07H36V11a4.94%2C4.94%2C0%2C0%2C0%2C3.49%2C4.41ZM43.22%2C21v1.08H33.63V17.62H35V21Zm-1.73-9V8h1.33V18.55H41.49V13.06H38.61V12Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M57.09%2C15.14V16.2h-13V15.14h5.82V13h1.32v2.11Zm-1.28-1.36c-2.19-.37-4.31-1.5-5.22-3.14-.9%2C1.64-3%2C2.77-5.2%2C3.14l-.5-1c2.56-.35%2C5-2%2C5-3.86V8.24h1.34v.64c0%2C1.91%2C2.48%2C3.51%2C5%2C3.86Zm-.31%2C6.1c0%2C1.6-1.84%2C2.48-4.91%2C2.48s-4.91-.88-4.91-2.48%2C1.84-2.48%2C4.91-2.48S55.5%2C18.28%2C55.5%2C19.88Zm-1.32%2C0c0-.95-1.32-1.47-3.59-1.47S47%2C18.93%2C47%2C19.88s1.31%2C1.47%2C3.58%2C1.47S54.18%2C20.82%2C54.18%2C19.88Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnResend:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M22.11%2C11.91c0%2C2.62%2C1%2C4.94%2C3.07%2C6l-.76%2C1A6.44%2C6.44%2C0%2C0%2C1%2C21.5%2C15a6.72%2C6.72%2C0%2C0%2C1-3%2C4.38l-.8-1c2.05-1.15%2C3.13-3.6%2C3.13-6.51V10.79H18.06V9.71h6.66v1.08H22.11Zm8-3.91V22.38H28.85V14.9H27v6.77H25.73V8.34H27v5.47h1.89V8Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M38.8%2C16.39a6%2C6%2C0%2C0%2C1-3.46-3.25%2C6.11%2C6.11%2C0%2C0%2C1-3.62%2C3.57l-.68-1A5.23%2C5.23%2C0%2C0%2C0%2C34.65%2C11v-.72h-3.2V9.19h7.67v1.07H36V11a4.94%2C4.94%2C0%2C0%2C0%2C3.49%2C4.41ZM43.22%2C21v1.08H33.63V17.62H35V21Zm-1.73-9V8h1.33V18.55H41.49V13.06H38.61V12Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M57.09%2C15.14V16.2h-13V15.14h5.82V13h1.32v2.11Zm-1.28-1.36c-2.19-.37-4.31-1.5-5.22-3.14-.9%2C1.64-3%2C2.77-5.2%2C3.14l-.5-1c2.56-.35%2C5-2%2C5-3.86V8.24h1.34v.64c0%2C1.91%2C2.48%2C3.51%2C5%2C3.86Zm-.31%2C6.1c0%2C1.6-1.84%2C2.48-4.91%2C2.48s-4.91-.88-4.91-2.48%2C1.84-2.48%2C4.91-2.48S55.5%2C18.28%2C55.5%2C19.88Zm-1.32%2C0c0-.95-1.32-1.47-3.59-1.47S47%2C18.93%2C47%2C19.88s1.31%2C1.47%2C3.58%2C1.47S54.18%2C20.82%2C54.18%2C19.88Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;}
+			.right button#btnResend:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M22.11%2C11.91c0%2C2.62%2C1%2C4.94%2C3.07%2C6l-.76%2C1A6.44%2C6.44%2C0%2C0%2C1%2C21.5%2C15a6.72%2C6.72%2C0%2C0%2C1-3%2C4.38l-.8-1c2.05-1.15%2C3.13-3.6%2C3.13-6.51V10.79H18.06V9.71h6.66v1.08H22.11Zm8-3.91V22.38H28.85V14.9H27v6.77H25.73V8.34H27v5.47h1.89V8Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M38.8%2C16.39a6%2C6%2C0%2C0%2C1-3.46-3.25%2C6.11%2C6.11%2C0%2C0%2C1-3.62%2C3.57l-.68-1A5.23%2C5.23%2C0%2C0%2C0%2C34.65%2C11v-.72h-3.2V9.19h7.67v1.07H36V11a4.94%2C4.94%2C0%2C0%2C0%2C3.49%2C4.41ZM43.22%2C21v1.08H33.63V17.62H35V21Zm-1.73-9V8h1.33V18.55H41.49V13.06H38.61V12Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M57.09%2C15.14V16.2h-13V15.14h5.82V13h1.32v2.11Zm-1.28-1.36c-2.19-.37-4.31-1.5-5.22-3.14-.9%2C1.64-3%2C2.77-5.2%2C3.14l-.5-1c2.56-.35%2C5-2%2C5-3.86V8.24h1.34v.64c0%2C1.91%2C2.48%2C3.51%2C5%2C3.86Zm-.31%2C6.1c0%2C1.6-1.84%2C2.48-4.91%2C2.48s-4.91-.88-4.91-2.48%2C1.84-2.48%2C4.91-2.48S55.5%2C18.28%2C55.5%2C19.88Zm-1.32%2C0c0-.95-1.32-1.47-3.59-1.47S47%2C18.93%2C47%2C19.88s1.31%2C1.47%2C3.58%2C1.47S54.18%2C20.82%2C54.18%2C19.88Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;width:76px;height:31px;}
+
+			.center{margin:0;text-align: center;font-size: 0;}
+
+			.center ul{margin:0;padding: 9px 0 10px;display: inline-block;}
+
+			.center ul li{float: left;margin-right:12px;}
+
+			.center ul li:last-child{margin-right: 0;}
+
+			.center ul li select#slctZoom{width:90px;height:28px;border-radius: 3px;border:1px solid #fff;vertical-align: middle;margin-top:-2px;color: #6c6c6c;font-family: verdana;font-size:14px;letter-spacing: -0.7px;}
+
+			.center ul li button#btnZoomOut{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23545454%3Bstroke%3Atransparent%3B%7D.cls-2%7Bfill%3Anone%3Bstroke%3A%23545454%3Bstroke-linecap%3Around%3Bstroke-linejoin%3Around%3Bstroke-width%3A2px%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M21%2C2a1%2C1%2C0%2C0%2C1%2C1%2C1V21a1%2C1%2C0%2C0%2C1-1%2C1H3a1%2C1%2C0%2C0%2C1-1-1V3A1%2C1%2C0%2C0%2C1%2C3%2C2H21m0-2H3A3%2C3%2C0%2C0%2C0%2C0%2C3V21a3%2C3%2C0%2C0%2C0%2C3%2C3H21a3%2C3%2C0%2C0%2C0%2C3-3V3a3%2C3%2C0%2C0%2C0-3-3Z%22%2F%3E%3Cline%20class%3D%22cls-2%22%20x1%3D%227%22%20y1%3D%2212%22%20x2%3D%2217%22%20y2%3D%2212%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.center ul li button#btnZoomOut:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%3B%7D.cls-2%7Bfill%3Anone%3Bstroke%3A%23e8590c%3Bstroke-linecap%3Around%3Bstroke-linejoin%3Around%3Bstroke-width%3A2px%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M21%2C2a1%2C1%2C0%2C0%2C1%2C1%2C1V21a1%2C1%2C0%2C0%2C1-1%2C1H3a1%2C1%2C0%2C0%2C1-1-1V3A1%2C1%2C0%2C0%2C1%2C3%2C2H21m0-2H3A3%2C3%2C0%2C0%2C0%2C0%2C3V21a3%2C3%2C0%2C0%2C0%2C3%2C3H21a3%2C3%2C0%2C0%2C0%2C3-3V3a3%2C3%2C0%2C0%2C0-3-3Z%22%2F%3E%3Cline%20class%3D%22cls-2%22%20x1%3D%227%22%20y1%3D%2212%22%20x2%3D%2217%22%20y2%3D%2212%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.center ul li button#btnZoomOut:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%3B%7D.cls-2%7Bfill%3Anone%3Bstroke%3A%23e8590c%3Bstroke-linecap%3Around%3Bstroke-linejoin%3Around%3Bstroke-width%3A2px%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M21%2C2a1%2C1%2C0%2C0%2C1%2C1%2C1V21a1%2C1%2C0%2C0%2C1-1%2C1H3a1%2C1%2C0%2C0%2C1-1-1V3A1%2C1%2C0%2C0%2C1%2C3%2C2H21m0-2H3A3%2C3%2C0%2C0%2C0%2C0%2C3V21a3%2C3%2C0%2C0%2C0%2C3%2C3H21a3%2C3%2C0%2C0%2C0%2C3-3V3a3%2C3%2C0%2C0%2C0-3-3Z%22%2F%3E%3Cline%20class%3D%22cls-2%22%20x1%3D%227%22%20y1%3D%2212%22%20x2%3D%2217%22%20y2%3D%2212%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;height: 25px;width:25px;}
+
+			.center ul li button#btnZoomIn{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23545454%3Bstroke%3Atransparent%3B%7D.cls-2%7Bfill%3Anone%3Bstroke%3A%23545454%3Bstroke-linecap%3Around%3Bstroke-linejoin%3Around%3Bstroke-width%3A2px%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M21%2C2a1%2C1%2C0%2C0%2C1%2C1%2C1V21a1%2C1%2C0%2C0%2C1-1%2C1H3a1%2C1%2C0%2C0%2C1-1-1V3A1%2C1%2C0%2C0%2C1%2C3%2C2H21m0-2H3A3%2C3%2C0%2C0%2C0%2C0%2C3V21a3%2C3%2C0%2C0%2C0%2C3%2C3H21a3%2C3%2C0%2C0%2C0%2C3-3V3a3%2C3%2C0%2C0%2C0-3-3Z%22%2F%3E%3Cline%20class%3D%22cls-2%22%20x1%3D%2217%22%20y1%3D%2212%22%20x2%3D%227%22%20y2%3D%2212%22%2F%3E%3Cline%20class%3D%22cls-2%22%20x1%3D%2212%22%20y1%3D%2217%22%20x2%3D%2212%22%20y2%3D%227%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.center ul li button#btnZoomIn:hover{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%3B%7D.cls-2%7Bfill%3Anone%3Bstroke%3A%23e8590c%3Bstroke-linecap%3Around%3Bstroke-linejoin%3Around%3Bstroke-width%3A2px%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M21%2C2a1%2C1%2C0%2C0%2C1%2C1%2C1V21a1%2C1%2C0%2C0%2C1-1%2C1H3a1%2C1%2C0%2C0%2C1-1-1V3A1%2C1%2C0%2C0%2C1%2C3%2C2H21m0-2H3A3%2C3%2C0%2C0%2C0%2C0%2C3V21a3%2C3%2C0%2C0%2C0%2C3%2C3H21a3%2C3%2C0%2C0%2C0%2C3-3V3a3%2C3%2C0%2C0%2C0-3-3Z%22%2F%3E%3Cline%20class%3D%22cls-2%22%20x1%3D%2217%22%20y1%3D%2212%22%20x2%3D%227%22%20y2%3D%2212%22%2F%3E%3Cline%20class%3D%22cls-2%22%20x1%3D%2212%22%20y1%3D%2217%22%20x2%3D%2212%22%20y2%3D%227%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+			.center ul li button#btnZoomIn:active{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%3B%7D.cls-2%7Bfill%3Anone%3Bstroke%3A%23e8590c%3Bstroke-linecap%3Around%3Bstroke-linejoin%3Around%3Bstroke-width%3A2px%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M21%2C2a1%2C1%2C0%2C0%2C1%2C1%2C1V21a1%2C1%2C0%2C0%2C1-1%2C1H3a1%2C1%2C0%2C0%2C1-1-1V3A1%2C1%2C0%2C0%2C1%2C3%2C2H21m0-2H3A3%2C3%2C0%2C0%2C0%2C0%2C3V21a3%2C3%2C0%2C0%2C0%2C3%2C3H21a3%2C3%2C0%2C0%2C0%2C3-3V3a3%2C3%2C0%2C0%2C0-3-3Z%22%2F%3E%3Cline%20class%3D%22cls-2%22%20x1%3D%2217%22%20y1%3D%2212%22%20x2%3D%227%22%20y2%3D%2212%22%2F%3E%3Cline%20class%3D%22cls-2%22%20x1%3D%2212%22%20y1%3D%2217%22%20x2%3D%2212%22%20y2%3D%227%22%2F%3E%3C%2Fsvg%3E) no-repeat 1px 1px;height: 25px;width:25px;}
+
+			.center ul li#liBorder{border-right:1px solid #9d9d9d;width:1px;height: 20px;margin-top:2px;margin-left:-1px;}
+
+			.center ul li button#btnHighlight{background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23545454%3Bstroke%3Atransparent%3B%7D.cls-2%7Bfill%3A%23f6eb16%3Bstroke%3Atransparent%3B%7D.cls-3%7Bfill%3A%23fff%3Bstroke%3Atransparent%3B%7D.cls-4%7Bfill%3Anone%3Bstroke%3A%23fff%3Bstroke-miterlimit%3A10%3Bstroke-width%3A1.6px%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%223%22%2F%3E%3Crect%20class%3D%22cls-2%22%20x%3D%227.12%22%20y%3D%2219.21%22%20width%3D%2213.89%22%20height%3D%222%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%222.99%2019.14%205.75%2019.14%206.67%2018.3%206.67%2017.76%204.38%2016.73%202.99%2019.14%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%224.72%2016.32%206.74%2017.3%207.19%2017.31%209.22%2016.08%209.25%2015.29%205.11%2012.55%204.84%2012.93%204.72%2016.32%22%2F%3E%3Cpath%20class%3D%22cls-4%22%20d%3D%22M10.62%2C3.92l-4%2C6.19s-1.12%2C1.44.11%2C2.22l2.08%2C1.44s1.47%2C1.25%2C2.7-.91S15%2C6.7%2C15%2C6.7s1.09-1.83-.64-2.65l-1.51-.93A1.79%2C1.79%2C0%2C0%2C0%2C10.62%2C3.92Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;}
+
+			/* [메인모니터 뷰어] 페이지번호 창 스타일 */
+			.crownix-dialog-message-pagenum {font-size: 20px;}
+
+			/* [메인모니터 뷰어] 서명창 타이틀의 폰트 색상, 사이즈 */
+			/*	.crownix-signature-header {color:#000000; font-size:17pt; height:45px; padding-top:10px;}	*/
+			/*	.crownix-signature-header {color:#676767; font-size:17pt; height:45px; padding-top:10px;}	*/
+			.crownix-signature-header {color:#676767; font-size:17pt; height:32px; padding-top:2px;}
+
+			/*  입력필드 포커스 효과 */
+			.crownix-formfield-blink {box-shadow: 0px 0px 15px 10px rgba(255, 188, 0, 1);}
+
+			/*  invalid 필드 포커스 효과 */
+			#m2soft-crownix-container .invalid-field, .crownix-layer-page .invalid-field {
+				box-shadow: 0 0 15px 10px #ff8100;
+				border: 0px solid #ff8100 !important;
+			}
+
+			/*  서명 탭 버튼 스타일 */
+			.crownix-signature-tab { width: 130px; }
+		</style>
+
+		<style>
+			/* layer popup 관련 스타일 */
+
+			/*
+        	* {
+        	  margin: 0;
+        	  padding: 0;
+        	}
+			 */
+
+        	body {
+        	  margin: 100px;
+        	}
+
+        	.pop-layer .pop-container {
+        	  padding: 20px 25px;
+        	}
+
+        	.pop-layer p.ctxt {
+			  /* color: #666; */
+			  color: rgb(58, 51, 51);
+			  line-height: 25px;
+			  /*텍스트 정렬 추가*/
+			  text-align: center;
+        	}
+
+        	.pop-layer .btn-r {
+        	  width: 100%;
+        	  margin: 10px 0 20px;
+        	  padding-top: 10px;
+        	  border-top: 1px solid #DDD;
+        	  text-align: right;
+        	}
+
+        	.pop-layer {
+        	  display: none;
+        	  position: absolute;
+        	  top: 50%;
+        	  left: 50%;
+        	  width: 410px;
+        	  height: auto;
+        	  background-color: #fff;
+        	  border: 5px solid #3571B5;
+        	  z-index: 10;
+        	}
+
+        	.dim-layer {
+        	  display: none;
+        	  position: fixed;
+        	  _position: absolute;
+        	  top: 0;
+        	  left: 0;
+        	  width: 100%;
+        	  height: 100%;
+        	  z-index: 100;
+        	}
+
+        	.dim-layer .dimBg {
+        	  position: absolute;
+        	  top: 0;
+        	  left: 0;
+        	  width: 100%;
+        	  height: 100%;
+        	  background: #000;
+        	  opacity: .5;
+        	  filter: alpha(opacity=50);
+        	}
+
+        	.dim-layer .pop-layer {
+        	  display: block;
+        	}
+
+        	a.btn-layerClose {
+        	  display: inline-block;
+        	  height: 25px;
+        	  padding: 0 14px 0;
+        	  border: 1px solid #304a8a;
+        	  background-color: #3f5a9d;
+        	  font-size: 13px;
+        	  color: #fff;
+        	  line-height: 25px;
+        	}
+
+        	a.btn-layerClose:hover {
+        	  border: 1px solid #091940;
+        	  background-color: #1f326a;
+        	  color: #fff;
+			}
+
+			.pop-conts img {
+				position: absolute;
+				top: 90%;
+				left: 50%;
+				margin-top: -65px;
+				margin-left: -25px;
+			}
+
+    	</style>
+	</head>
+	<body style="margin:0px; padding:0px;">
+		<!-- [start] 커스텀 툴바 -->
+		<header>
+			<div class="left">
+				<ul>
+					<li><button id="btnMoveFirst" title="첫 페이지로 이동"></button></li>
+					<li><button id="btnMovePrev" title="앞페이지로 이동"></button></li>
+					<li><button id="btnMoveNext" title="뒷페이지로 이동"></button></li>
+					<li><button id="btnMoveLast" title="마지막 페이지로 이동"></button></li>
+				</ul>
+			</div>
+			<div class="right">
+				<button id="btnNextSign"></button>
+				<button id="btnSubmit"></button>
+				<button id="btnClose"></button>
+			</div>
+			<div class="center">
+				<ul>
+					<li>
+						<select id="slctZoom" dir="rtl"></select>
+					</li>
+					<li><button id="btnZoomOut"></button></li>
+					<li><button id="btnZoomIn"></button></li>
+					<li id="liBorder"></li>
+					<li><button id="btnHighlight"></button></li>
+				</ul>
+			</div>
+		</header>
+		<!-- [end] 커스텀 툴바 -->
+		<!--
+		<div id="crownix-viewer" style="position:absolute; width:100%; height:100%;"></div>
+		-->
+		<div id="crownix-viewer" style="position:absolute; width:100%; height:93%;"></div>
+		<div class="dim-layer">
+			<div class="dimBg"></div>
+			<div id="layer2" class="pop-layer">
+				<div class="pop-container">
+					<div class="pop-conts">
+						<p class="ctxt">
+							제출 처리중입니다. <br>
+							잠시만 기다려주세요. <br>
+							<br>
+							<br>
+							<br>
+						</p>
+						<!-- bmr <img src="img/loading.gif" alt="">-->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			var iSubmitCheckInterval = 10000;		//	#btnPrint 버튼 클릭시, 서버의 제출완료 여부를 체크 서블릿에 확인 요청을 보내는 시간 간격 (ms)
+			var iSubmitCheckCount = 0;				//	#btnPrint 버튼 클릭시, 서버의 제출완료 여부를 체크 서블릿에 확인 요청을 보낸 횟수
+			var iSubmitCheckMaxCount = 12;			//	#btnPrint 버튼 클릭시, 서버의 제출완료 여부를 체크 서블릿에 확인 요청을 보낼 최대 횟수
+			var iIdInterval;						//	#btnPrint 버튼 클릭시, 서버의 제출완료 여부를 체크 서블릿에 확인 요청을 보낼 타이머(interval) 의 id
+			var sSubmitCheckURL = "";				//	#btnPrint 버튼 클릭시, 서버의 제출완료 여부를 체크하기 위해 요청을 보낼 서블릿의 URL
+
+			var bIsOkToClose = false;				// 한번이라도 인쇄가 되었는지(사실상 print 버튼을 한번이라도 눌렀는지) 여부 확인용 flag 값
+
+			var isHighlightEnabled = false;			// 하이라이트(노트) 기능 활성화 토글용 flag 값
+			var isHighlightInitialized = false;		// 하이라이트(노트) 초기 데이터 셋팅 관련 flag 값
+
+			// 기능이 on 되었을때의 하이라이트(노트) 버튼 이미지
+			var sCssBgHlOn = "url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3Bstroke%3Atransparent%3B%7D.cls-2%7Bfill%3A%23f6eb16%3Bstroke%3Atransparent%3B%7D.cls-3%7Bfill%3A%23fff%3Bstroke%3Atransparent%3B%7D.cls-4%7Bfill%3Anone%3Bstroke%3A%23fff%3Bstroke-miterlimit%3A10%3Bstroke-width%3A1.6px%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%223%22%2F%3E%3Crect%20class%3D%22cls-2%22%20x%3D%227.12%22%20y%3D%2219.21%22%20width%3D%2213.89%22%20height%3D%222%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%222.99%2019.14%205.75%2019.14%206.67%2018.3%206.67%2017.76%204.38%2016.73%202.99%2019.14%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%224.72%2016.32%206.74%2017.3%207.19%2017.31%209.22%2016.08%209.25%2015.29%205.11%2012.55%204.84%2012.93%204.72%2016.32%22%2F%3E%3Cpath%20class%3D%22cls-4%22%20d%3D%22M10.62%2C3.92l-4%2C6.19s-1.12%2C1.44.11%2C2.22l2.08%2C1.44s1.47%2C1.25%2C2.7-.91S15%2C6.7%2C15%2C6.7s1.09-1.83-.64-2.65l-1.51-.93A1.79%2C1.79%2C0%2C0%2C0%2C10.62%2C3.92Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;height: 25px;width:25px;";
+
+			// 기능이 off 되었을때의 하이라이트(노트) 버튼 이미지
+			var sCssBgHlOff = "url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2025%2025%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23545454%3Bstroke%3Atransparent%3B%7D.cls-2%7Bfill%3A%23f6eb16%3Bstroke%3Atransparent%3B%7D.cls-3%7Bfill%3A%23fff%3Bstroke%3Atransparent%3B%7D.cls-4%7Bfill%3Anone%3Bstroke%3A%23fff%3Bstroke-miterlimit%3A10%3Bstroke-width%3A1.6px%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%223%22%2F%3E%3Crect%20class%3D%22cls-2%22%20x%3D%227.12%22%20y%3D%2219.21%22%20width%3D%2213.89%22%20height%3D%222%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%222.99%2019.14%205.75%2019.14%206.67%2018.3%206.67%2017.76%204.38%2016.73%202.99%2019.14%22%2F%3E%3Cpolygon%20class%3D%22cls-3%22%20points%3D%224.72%2016.32%206.74%2017.3%207.19%2017.31%209.22%2016.08%209.25%2015.29%205.11%2012.55%204.84%2012.93%204.72%2016.32%22%2F%3E%3Cpath%20class%3D%22cls-4%22%20d%3D%22M10.62%2C3.92l-4%2C6.19s-1.12%2C1.44.11%2C2.22l2.08%2C1.44s1.47%2C1.25%2C2.7-.91S15%2C6.7%2C15%2C6.7s1.09-1.83-.64-2.65l-1.51-.93A1.79%2C1.79%2C0%2C0%2C0%2C10.62%2C3.92Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0";
+
+			// 기능이 enable 되었을때의 닫기 버튼 이미지
+			var sCssBgCloseEnabled = "background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23005bac%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;";
+
+			// 기능이 disable 되었을때의 닫기 버튼 이미지
+			var sCssBgCloseDisabled = "url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23808080%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;";
+
+			// 마우스가 버튼에 hover 되었을때의 닫기 버튼 이미지
+			var sCssBgCloseHover = "url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2076%2031%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23e8590c%3B%7D.cls-2%7Bfill%3A%23fff%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Crect%20class%3D%22cls-1%22%20width%3D%2275%22%20height%3D%2230%22%20rx%3D%222%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M32.88%2C14.77a31%2C31%2C0%2C0%2C1-6.67.5H25.08V9h6.33V10h-5v4.18a29.64%2C29.64%2C0%2C0%2C0%2C6.34-.48Zm-5%2C6.36h8v1.05H26.61V16.92h9.1v1H27.92ZM37.7%2C11.4v1.08H35.57V16.1H34.26V8h1.31v3.4Z%22%2F%3E%3Cpath%20class%3D%22cls-2%22%20d%3D%22M45.12%2C9.57c0%2C4.15-1.91%2C7.8-6.68%2C10.13l-.7-1.07c3.86-1.84%2C5.78-4.59%2C6-8H38.4V9.57ZM49.33%2C8V22.38H48V8Z%22%2F%3E%3C%2Fsvg%3E) no-repeat 0 0;width:76px;height:31px;";
+
+			var arrSlctOptions = [];
+			arrSlctOptions.push("<option>25%</option>");
+			arrSlctOptions.push("<option>50%</option>");
+			arrSlctOptions.push("<option>75%</option>");
+			arrSlctOptions.push("<option>100%</option>");
+			arrSlctOptions.push("<option>125%</option>");
+			arrSlctOptions.push("<option>150%</option>");
+			arrSlctOptions.push("<option>200%</option>");
+			arrSlctOptions.push("<option>250%</option>");
+			arrSlctOptions.push("<option>가로 맞춤</option>");
+			arrSlctOptions.push("<option>세로 맞춤</option>");
+			var sSlctOptions = arrSlctOptions.join("");
+
+		</script>
+		<script>
+
+			
+			var g_dialog = null;
+
+			var viewerOptions = {};
+
+			var openFileOptions = {mirroring:{enable:true,syncPage:true},defaultZoom:'width',keepZoomatio:'true',defaultZoomCentre:'lefttop',showPageNum:2,
+					formField : {
+						signatureMethod:"center",
+						keepTabButton: true,	//	m2soft_hjlee
+						tabCurrentMode:false,
+						excludeOnFormData:true,
+						tabShowSignWindow:false,
+						skipValidation : true
+					},noMessageOfSubmitFail:true, noMessageOfSubmitSuccess : true, keepZoomRatio:true, includeNoteInPrint:false, includeNoteInExport:false, enableNote:true, showInvalid:true, scrollMovePage:false, useTableOfContents:true, useIdCardCapture:true, validateCheck : 'page' };
+
+			//	var arrHideToolbarItem = ["save","print","search","cancel","inquery","print_pdf"];
+
+			m2soft.crownix.Resource.r.validate_tab_title.ko = '작성 필요 항목';
+			m2soft.crownix.Resource.r.back.ko = '저장 후 이전';
+			m2soft.crownix.Resource.r.next.ko = '저장 후 다음';
+
+			/******************* [Start of Mirroring Code] *******************/
+			// 미러링 프로그램이 사용하는 코드 입니다. 아래 코드를 수정하지 마세요.
+			// 수정할 경우 프로그램이 동작하지 않을 수 있습니다.
+			var viewer;
+			var viewerDomId = 'crownix-viewer';	// m2soft_hjlee
+			var Util = m2soft.crownix.Util;
+			var DELIM = '\u0003';
+ 
+			var inputMode;		// 입력 모드 (Client or Host)
+			var finishClient; 	// m2soft_hjlee
+
+			var main_url = '';
+			var sub_url = '';
+			var server_url = '';
+			var submit_url = '';
+			var infotalk_prc = '';
+			var sys_data = '';
+			var app_data = '';
+
+			server_url = Util.getUrlVar('server_url');
+			submit_url = Util.getUrlVar('submit_url');
+			infotalk_prc = Util.getUrlVar('infotalk_prc');
+			sys_data = Util.getUrlVar('sys_data');
+
+			// server_url = server_url || Util.getUrlVar('server_url');
+			// submit_url = submit_url || Util.getUrlVar('submit_url');
+
+
+			// var serverUrl = '';
+			// var infoTalkUrl = '';
+			// serverUrl = serverUrl || Util.getUrlVar('server_url');
+			// infoTalkUrl = infoTalkUrl || Util.getUrlVar('submit_url');
+
+			//-- JSON parse 과정에서 에러 발생시, 해당 익셉션 정보를 보관하는 전역변수
+			var objExceptionJsonParse = null;
+
+			//-- 인포토크서버 제출 관련 추가
+			var objSubmitParamToInfotalk = null;
+
+			m2soft.crownix.Util.ActionEvents = {
+				start: 'mousedown',
+				move: 'mousemove',
+				end: 'mouseup',
+				out: 'mouseout',
+				over: 'mouseover'
+			};
+
+			$(document).ready(function(){
+
+				// $(document).ajaxStart(fn_layerOpen);
+				// $(document).ajaxStop(fn_layerClose);
+				
+
+
+				viewer = new m2soft.crownix.Viewer(server_url, 'crownix-viewer', viewerOptions);
+				//	viewer.hideToolbarItem(arrHideToolbarItem);
+				viewer.hideToolbar();
+
+				try {
+					customFunction();
+				} catch(err) {
+					//	alert(err);
+					new m2soft.crownix.MirroringManager().externalEvent.returnReportFinished(err);
+				}
+
+				/**** m2soft_hjlee - start ****/
+				var changeInputMode = function (auth) {
+					var fieldOrder = m2soft.crownix.FieldOrder.getInstance();
+
+					inputMode = auth;
+
+					fieldOrder.setFilter({auth: [inputMode]});
+					fieldOrder.reset();
+				};
+
+				finishClient = function() {
+					var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+					dialog.show(
+						'고객님의 서명이 완료 되었습니다.<br><br>모집인 서명을 진행해 주세요.',
+						{
+							title: '안내',
+							okHandler: function(){
+								changeInputMode('Host');
+								var fieldOrder = m2soft.crownix.FieldOrder.getInstance();
+								fieldOrder.moveNext();
+							}
+						}
+					);
+					/* 
+					if(objSubmitParamToInfotalk["BSN_CLSF_CD"] == "SC"){
+					}
+					 */
+				};
+				/**** m2soft_hjlee - end ****/
+
+				viewer.bind('report-finished', function(e) {
+					g_dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+
+					fn_initQsParam();
+
+					/*
+					main_url = fn_sGetQueryStringValue(mirroringOptions, 'main_url');
+					sub_url = fn_sGetQueryStringValue(mirroringOptions, 'sub_url');
+					server_url = fn_sGetQueryStringValue(mirroringOptions, 'server_url');
+					submit_url = fn_sGetQueryStringValue(mirroringOptions, 'submit_url');
+					infotalk_prc = fn_sGetQueryStringValue(mirroringOptions, 'infotalk_prc');
+					sys_data = fn_sGetQueryStringValue(mirroringOptions, 'sys_data');
+					app_data = fn_sGetQueryStringValue(mirroringOptions, 'app_data');
+ 					*/
+					var iZoomSize = Math.round(viewer.zoom()  * 100);
+					$("select#slctZoom").empty();
+					$("<option>" + iZoomSize + "%</option>").prependTo("select#slctZoom");
+					$(sSlctOptions).appendTo("select#slctZoom");
+
+					$("#slctZoom").on("change", function(){
+						var sSelectedText = $(this).find("option:selected").val();
+						//	alert(sSelectedText);
+						if(sSelectedText == "가로 맞춤"){
+							viewer.zoom("width");
+						}else if(sSelectedText == "세로 맞춤"){
+							viewer.zoom("height");
+						}else{
+							var rgxNumber = /[^0-9]/g;
+							var zoomRatio = parseInt(sSelectedText.replace(rgxNumber, ""))/100;
+							viewer.zoom(zoomRatio);
+						}
+
+						this.blur();
+					});
+					/*
+					//	$("#slctZoom").on("focus", function(){
+					$("#slctZoom").on("mouseup", function(){
+						//	$(this).empty();
+						//	$(this).html(sSlctOptions);
+						$(this).blur();
+					});
+					*/
+					/*
+					$("#slctZoom").on("mousedown", function(){
+						//	$(this).empty();
+						$(this).html(sSlctOptions);
+						//	$(this).blur();
+					});
+					*/
+
+					$("#btnMoveFirst").on("click", function(){
+						viewer.moveFirstPage();
+					});
+
+					$("#btnMovePrev").on("click", function(){
+						viewer.prevPage();
+					});
+
+					$("#btnMoveNext").on("click", function(){
+						viewer.nextPage();
+					});
+
+					$("#btnMoveLast").on("click", function(){
+						viewer.moveLastPage();
+					});
+
+					$("#btnZoomOut").on("click", function(){
+						var iZoomSize = Math.round(viewer.zoomOut()  * 100);
+						$("select#slctZoom").html("<option>" + iZoomSize + "%</option>" + sSlctOptions);
+						/*
+						$("select#slctZoom").empty();
+						$("<option>" + iZoomSize + "%</option>").prependTo("select#slctZoom");
+						$(sSlctOptions).appendTo("select#slctZoom");
+						*/
+					});
+
+					$("#btnZoomIn").on("click", function(){
+						var iZoomSize = Math.round(viewer.zoomIn()  * 100);
+						$("select#slctZoom").html("<option>" + iZoomSize + "%</option>" + sSlctOptions);
+						/*
+						$("select#slctZoom").empty();
+						$("<option>" + iZoomSize + "%</option>").prependTo("select#slctZoom");
+						$(sSlctOptions).appendTo("select#slctZoom");
+						*/
+					});
+
+					$("#btnHighlight").on("click", function(){
+						var objOption = {}
+
+						if(isHighlightInitialized == false){	// 형광펜 버튼을 처음 누른 경우
+
+							objOption["mode"] = "note";
+							objOption["tool"] = "highlighter";
+							objOption["style"] = {};
+							objOption["style"]["width"] = 10;
+							// objOption["style"]["transparency"] = 70;
+							objOption["style"]["transparency"] = 50;
+							objOption["style"]["color"] = 5;
+
+							viewer.note(objOption);
+							$("#btnHighlight").css("background", sCssBgHlOn);
+
+							viewer.hideNoteItem(["pen", "textNote"]);
+
+							isHighlightInitialized = true;	// 모든 처리 마치고 형광펜 초기화 여부를 on 시킨다.
+						}else{											// 형광펜 버튼을 처음 누른게 아닌 경우
+							if(isHighlightEnabled == false){	// 형광펜 사용중이었으면, 형광펜을 show 모드로 변경시킨다.
+								objOption["mode"] = "show";
+								viewer.note(objOption);
+								$("#btnHighlight").css("background", sCssBgHlOff);
+
+								//	viewer.hideNoteItem(["pen", "textNote"]);
+							}else{											// 형광펜 사용중 아니면, 형광펜을 note 모드로 변경시킨다.
+								objOption["mode"] = "note";
+								viewer.note(objOption);
+								$("#btnHighlight").css("background", sCssBgHlOn);
+
+								//	viewer.hideNoteItem(["pen", "textNote"]);
+							}
+							isHighlightEnabled = !isHighlightEnabled;	// 모든 처리 마치고 형광펜 활성화 flag를 toggle 시킨다.
+						}
+					});
+
+					$("#btnNextSign").on("click", function(){
+						viewer.moveNextTabOrder();
+					});
+
+					$("#btnSubmit").on("click", function(){
+						viewer.submit(submit_url, 'dummy', '100000');
+						fn_addBtnPrint();
+						fn_chkSubmit();
+						//fn_intervalCheckSubmit();
+						
+						
+		
+						//fn_submit();
+					});
+
+					$("#btnClose").on("click", function(){
+						var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+						dialog.show(
+							'터치모니터 프로그램을 종료하시겠습니까?',
+							{
+								type : 'confirm',
+								switchConfirmButton : true,
+								title : '안내',
+								okHandler : function(){
+									window.external.Exit();
+								},
+								cancelHandler : function(){
+									// 아무것도 안함.
+								}
+							}
+						);
+					});
+
+
+
+
+					// if(Util.getUrlVar('infotalk_prc')  != 2){		// 미리보기모드(infotalk_prc == 2)가 아닐 경우, 제출데이터(app_data) 관련 로직을 수행한다.
+					if(infotalk_prc != 2){		// 미리보기모드(infotalk_prc == 2)가 아닐 경우, 제출데이터(app_data) 관련 로직을 수행한다.
+						if((app_data != '')								// InfoTalk 서버 제출 데이터가 있을 경우
+							&& (app_data != undefined)
+							&& (app_data != 'undefined')
+							&& (app_data != null)
+						){
+							try{
+								objSubmitParamToInfotalk = JSON.parse(app_data);
+							}catch(objExceptionJsonParse){
+								// JSON 파싱 에러 발생시 처리 로직.
+
+								/**/
+								// 에러 로그 서버 제출 로직
+								var objErrorToSubmit = {};
+								objErrorToSubmit["JsonParseErrorData"] = app_data;
+								objErrorToSubmit["MirroringHtmlError"] = objExceptionJsonParse;
+
+								var loggingServerURL = server_url.replace('/ReportingServer7/service', '/InfoTalkServer7/MirroringClientErrorLogger');
+								//	var loggingServerURL = "http://127.0.0.1:8080/_crownix_InfoTalk_server/MirroringClientErrorLogger";		// 테스트
+
+								$.support.cors = true; // $.ajax() 호출시, "No Transport" 에러(크로스 도메인관련) 대응책.
+								$.ajax({
+									url : loggingServerURL,
+									type : "post",
+									dataType : "json",
+									data : objErrorToSubmit,
+									global : false, // global ajax event handler 트리거 여부(.ajaxStart(), .ajaxStop() 등등...)
+									success : function(data, sTextStatus, objJqXHR){
+										// success
+									},
+									error : function(objJqXHR, sTestStatus, sErrorThrown){
+										// error
+									}
+								});
+
+								var arrTemp = [];
+								arrTemp.push('제출 데이터가 정상적 JSON 이 아닙니다.');
+								arrTemp.push('\n');
+								arrTemp.push(objExceptionJsonParse);
+								arrTemp.push('\n');
+								arrTemp.push('제출 데이터 : ');
+								arrTemp.push(app_data);
+								var sTemp = arrTemp.join('\n');
+								//	alert(sTemp);
+
+								var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+								dialog.show(
+									sTemp,
+									{
+										title : '오류',
+										okHandler : function(){
+											//	window.external.Exit();
+										}
+									}
+								);
+								new m2soft.crownix.MirroringManager().externalEvent.returnReportFinished(objExceptionJsonParse);
+							}
+						}
+					}
+
+					changeInputMode('Client');	// m2soft_hjlee
+
+					new m2soft.crownix.MirroringManager().externalEvent.returnReportFinished(e);
+				});
+
+				/**** m2soft_hjlee - start ****/
+				viewer.bind('nomore-next-tab', function(){
+					if(inputMode == 'Client') {
+						window.external.InvokeScript('finishClient();');
+						finishClient();
+					} else if(inputMode == 'Host') {
+						//	$("button#btnNextSign").remove();	// 고객 서명 완료, 모집인 서명 완료. 둘 다 완료되면 다음서명 버튼을 없앤다.
+
+						/*
+						var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+						dialog.show(
+							'모든 서명이 완료 되었습니다.',
+							{
+								title: '서명 완료 안내'
+							}
+						);
+
+						var fn_ShowMessage = function(){
+							if($("button#btnNextSign") != null){
+								$("button#btnNextSign").remove();	// 고객 서명 완료, 모집인 서명 완료. 둘 다 완료되면 다음서명 버튼을 없앤다.
+							}
+						}
+						setTimeout(fn_ShowMessage, 500);
+						*/
+						var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+						dialog.show(
+							'모든 서명이 완료 되었습니다.<br><br>상단 [제출] 버튼을 선택해 주세요.',
+							{
+								title: '안내',
+								okHandler : function(){
+									if($("button#btnNextSign").length > 0){
+										$("button#btnNextSign").remove();	// 고객 서명 완료, 모집인 서명 완료. 둘 다 완료되면 다음서명 버튼을 없앤다.
+									}
+									/*
+									if($("button#btnNextSign") != null){
+										$("button#btnNextSign").remove();	// 고객 서명 완료, 모집인 서명 완료. 둘 다 완료되면 다음서명 버튼을 없앤다.
+									}
+									 */
+								}
+							}
+						);
+					}
+				});
+				/**** m2soft_hjlee - end ****/
+			});
+			/******************* [End of Mirroring Code] *******************/
+
+			// 고객사에서 필요한 스크립트는 이 곳에 추가 작성 하세요.
+			var customFunction = function() {
+
+				// 미리보기 모드(infotalk_prc == 2)일 경우 제출, 다음서명 버튼을 제거한다.
+				// if(Util.getUrlVar('infotalk_prc')  == 2){
+				if(infotalk_prc == 2){
+					if($("button#btnNextSign").length > 0){
+						$("button#btnNextSign").remove();
+					}
+					if($("button#btnSubmit").length > 0){
+						$("button#btnSubmit").remove();
+					}
+				}
+
+				// 제출 완료 후 데이터 전송
+				viewer.bind('submit-finished', function(e) {
+
+					window.external.ChangeSubMonitorVisible();	// 모집인이 제출을 완료하면 고객 뷰어를 닫는다.
+
+					if(e.status){	// 전송 성공
+
+						bIsOkToClose = false;	// 전송 성공한 경우, [닫기] 버튼을 통해 닫을 수 없게 한다. ([인쇄] 버튼을 클릭하고 나서야, 닫을 수 있게)
+
+						//-- [추가] 전송 완료 후, <인쇄>, <닫기> 버튼 추가
+						if($("button#btnNextSign").length > 0){
+							$("button#btnNextSign").remove();
+						}
+						if($("button#btnSubmit").length > 0){
+							$("button#btnSubmit").remove();
+						}
+
+						/*
+						//-- 전자 서명 제출 후, 인포토크 서버 처리 시간을 벌기 위한 프로그래스 바 대용 토스트 메세지 창.
+						var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+						dialog.show(
+							'제출 처리중입니다.<br><br>잠시만 기다려주세요.',
+							{
+								type : 'toast',
+								time : 10,
+								//	time : 3,
+								title : '안내'
+							}
+						);
+						*/
+
+						/*
+						try{
+							//-- 가망 고객 아닌 경우에만 버튼을 추가한다.
+							//if(objSubmitParamToInfotalk["BSN_CLSF_CD"] != "SC"){
+								fn_addBtnClose();								// 닫기 버튼 추가
+								fn_intervalCheckSubmit();					// 서버측 제출(pdf 파일 생성)이 완료되었는지 주기적으로 체크하는 인터벌 메소드를 등록.
+							//}
+						}catch(e){
+							var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+							dialog.show(
+								'처리 과정에 에러가 발생했습니다.' + '<br>' + '(에러내용 : ' + e.message + ')',
+								{
+									title : '오류'
+								}
+							);
+						}
+
+
+						formData = viewer.getFormDataValue();
+
+						var appendData =
+							DELIM + 'METADATA' + DELIM + 'infotalk_prc' + DELIM + 'tf' + DELIM + infotalk_prc +
+							DELIM + 'METADATA' + DELIM + 'sys_data' + DELIM + 'tf' + DELIM + sys_data +
+							DELIM + 'METADATA' + DELIM + 'app_data' + DELIM + 'tf' + DELIM + app_data
+							;
+						*/
+						/*
+						var appendData =
+							DELIM + 'METADATA' + DELIM + 'infotalk_prc' + DELIM + 'tf' + DELIM + Util.getUrlVar('infotalk_prc') +
+							DELIM + 'METADATA' + DELIM + 'sys_data' + DELIM + 'tf' + DELIM + Util.getUrlVar('sys_data') +
+							DELIM + 'METADATA' + DELIM + 'app_data' + DELIM + 'tf' + DELIM + Util.getUrlVar('app_data')
+							;
+ 						*/
+							// 임시 주석처리함. 기간계 화면쪽에 0 전달시에는, 화면을 닫지 않도록 하기위해, 분기처리 로직이 들어갈때까지만 주석처리함.
+						//window.external.HandlerSubmitFinished('1' + formData + appendData);
+						/*
+						if(objSubmitParamToInfotalk["BSN_CLSF_CD"] == "SC"){
+							window.external.Exit();				// 제출 완료 후, 기간계에 데이터 전달 하고, 이 업무가 "가망고객"일 경우, 뷰어를 confirm 창 없이 스스로 닫는다.
+						}
+						*/
+						// 뷰어 확인창 없이 닫는다.
+						//	window.external.Exit();					// 주석 풀지 말것. UI에서 뷰어 닫아줌.
+						// 뷰어 확인창으로 닫는다.
+						//	window.external.Close();				// 주석 풀지 말것. UI에서 뷰어 닫아줌.
+					} else {	// 전송 실패
+
+						bIsOkToClose = true;	// 전송 실패한 경우, [닫기] 버튼을 통해 닫을 수 있게 한다.
+
+						var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+						dialog.show(
+							'제출 과정에 에러가 발생했습니다.' + '<br>' + '(에러내용 : ' + e.message + ')' + '\n' + '\n' + '다시 제출하시겠습니까?',
+							{
+								type : 'confirm',
+								switchConfirmButton : true,
+								title : '오류',
+								okHandler : function(){
+									viewer.submit(submit_url, 'dummy', '100000');
+								},
+								cancelHandler : function(){
+									window.external.HandlerSubmitFinished('0' + DELIM + e.message);
+								}
+							}
+						);
+					}
+				});
+			};
+
+			function fn_submit() {
+				// alert(JSON.stringify(objSubmitParamToInfotalk, null, 5));
+				// alert(app_data);
+				
+				
+				//-- 인포토크 제출 관련 추가
+				if(objSubmitParamToInfotalk != null){
+					objSubmitParamToInfotalk["request_id"] = objSubmitParamToInfotalk["SUS_NO"]; // InfoTalk 재처리 데이터 관련 파라미터 (옴니(omniCommon.js 참고)는 bsnDsCd 가 1일 경우, SUS_NO + 1 로, bsnDsCd 가 1일 경우 SUS_NO)
+					viewer.addSubmitParameters(objSubmitParamToInfotalk);
+					viewer.submit(submit_url, 'dummy', '100000');
+				}else{
+
+					var arrTemp = [];
+					arrTemp.push('제출에 실패했습니다.');
+					arrTemp.push('\n');
+					arrTemp.push(objExceptionJsonParse);		// JSON parse 시 발생한 익셉션 관련 정보
+					arrTemp.push('\n');
+					arrTemp.push('제출 데이터 : ');
+					arrTemp.push(app_data);	
+
+					var sTemp = arrTemp.join('\n');
+					var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+					dialog.show(
+						sTemp,
+						{
+							title : '오류',
+							okHandler : function(){
+								//	window.external.Exit();
+							}
+						}
+					);
+				}
+				
+			}
+
+			// [인쇄] 버튼 추가
+			function fn_addBtnPrint(){
+				// 프린터 인쇄
+				if($('#btnPrint').length == 0){
+					$('<button id="btnPrint"></button>').appendTo('header div.right');
+				}
+
+				$('#btnPrint').on("click", function(){
+					var objPrintOption = {};
+					objPrintOption["isServerSide"] = true;
+					//	objPrintOption["limitedPage"] = 0;
+
+					viewer.print(objPrintOption);
+					//	viewer.print([true, 0]);
+
+					bIsOkToClose = true;		// 정상적으로 인쇄했으므로, [닫기] 버튼을 통해 닫을 수 있게 한다.
+				});
+				$('#btnPrint').attr('disabled', true);	// 최초 셋팅은 비활성화 상태로 띄운다.
+			}
+
+			// [인쇄] 버튼 삭제
+			function fn_delBtnPrint(){
+				$('#btnPrint').remove();
+			}
+
+			// [닫기] 버튼 추가
+			function fn_addBtnClose(){
+				// 창 닫기
+				if($('#btnClose').length == 0){
+					$('<button id="btnClose"></button>').appendTo('header div.right');
+				}
+
+				$('#btnClose').on("click", function(){
+					if(bIsOkToClose == true){
+						var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+						dialog.show(
+							'터치모니터 프로그램을 종료하시겠습니까?',
+							{
+								type : 'confirm',
+								switchConfirmButton : true,
+								title : '안내',
+								okHandler : function(){
+									window.external.Exit();
+								},
+								cancelHandler : function(){
+									// 아무것도 안함.
+								}
+							}
+						);
+					}else{
+						var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+						dialog.show(
+							'현재 문서를 출력한 이후에 업무를 종료할 수 있습니다.<br><br>상단 [인쇄] 버튼을 선택하여 문서를 출력해 주세요.',
+							{
+								title: '안내'
+							}
+						);
+					}
+				});
+			}
+
+			//-- [닫기] 버튼 삭제
+			function fn_delBtnClose(){
+				$('#btnClose').remove();
+			}
+
+			function fn_intervalCheckSubmit(){
+
+				//fn_layerOpen();
+
+				//fn_chkSubmit();
+				iIdInterval = setInterval(
+					fn_chkSubmit,
+					iSubmitCheckInterval
+				);
+			}
+
+			function fn_chkSubmit(){
+				sSubmitCheckURL = server_url.replace('/ReportingServer7/service', '/InfoTalkServer/nhedoc');
+				// sSubmitCheckURL = "http://127.0.0.1:8080/_crownix_InfoTalk_server/nhedoc";	// 테스트
+				/*
+				var objSvcParams = {};
+				objSvcParams["sus_no"] = objSubmitParamToInfotalk["SUS_NO"];
+				var jsonSvcParams = JSON.stringify(objSvcParams);
+
+				var objSubmit = {};
+				objSubmit["svc_id"] = "1";	// 무조건 1
+				objSubmit["svc_params"] = jsonSvcParams;
+
+				iSubmitCheckCount++;
+				if(iSubmitCheckCount  <= iSubmitCheckMaxCount){
+
+					$.support.cors = true; // $.ajax() 호출시, "No Transport" 에러(크로스 도메인관련) 대응책.
+					$.ajax({
+						url : sSubmitCheckURL,
+						type : "post",
+						dataType : "json",
+						data : objSubmit,
+						global : true, // global ajax event handler 트리거 여부(.ajaxStart(), .ajaxStop() 등등...)
+						success : function(data, sTextStatus, objJqXHR){
+							var objRs = data;
+							var suc_yn = objRs["suc_yn"];			// 인포토크서버에 요청 데이터 검증 통과 여부 (0:검증실패, 1:검증성공)
+							var errmsg = objRs["errmsg"];			// 인포토크서버에 요청 실패시 에러 메세지
+							var pdf_yn = objRs["pdf_yn"];			// 전자문서처리 완료여부 (0:진행중, 1:성공, 2:에러)
+							var step = objRs["step"];				// 전자문서처리 미완료시 단계
+
+							if(suc_yn == '1'){
+								if(pdf_yn == '0'){
+
+
+									//-- 전자 서명 제출 후,  토스트 메세지 창.
+									
+									g_dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+									g_dialog.show(
+										'제출 처리중입니다.<br><br>잠시만 기다려주세요.',
+										{
+											outsideClose : false,
+											type : 'toast',
+											time : iSubmitCheckInterval,
+											// time : (iSubmitCheckInterval - 500),
+											// time : (iSubmitCheckInterval/1000) - 2,
+											title : '안내',											
+											closeHandler : function(){
+												// 사용자가 메세지 창을 닫을 때 실행시킬 함수
+											}
+										}
+									);
+									
+
+
+									
+								}else if(pdf_yn == '1'){
+*/
+									fn_layerClose();
+
+									fn_delBtnClose();
+									fn_addBtnPrint();	// [인쇄] 버튼 추가
+									fn_addBtnClose();
+
+									var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+									dialog.show(
+										'제출 처리가 완료되었습니다.<br><br>상단 [인쇄] 버튼을 선택하여 문서를 출력해 주세요.',
+										{
+											//	type : 'toast',
+											//	time : 5,
+											title : '안내'
+										}
+									);
+									$('#btnPrint').attr('disabled', false);	// 인쇄 버튼 활성화
+
+									clearInterval(iIdInterval);	// 인터벌 클리어
+									iIdInterval = undefined;	// 인터벌 id 초기화
+
+/*
+								}else if(pdf_yn == '2'){
+
+									fn_layerClose();
+									// g_dialog.close();
+
+									var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+									dialog.show(
+										'제출 처리중 시스템 오류가 발생하였습니다.(재처리 대상)',
+										{
+											//	type : 'toast',
+											//	time : 5,
+											title : '오류'
+										}
+									);
+									bIsOkToClose = true;		// 에러가 난 경우, [닫기] 버튼을 통해 닫을 수 있게 한다.
+
+									clearInterval(iIdInterval);	// 인터벌 클리어
+									iIdInterval = undefined;	// 인터벌 id 초기화
+								}
+							}else{
+
+								fn_layerClose();
+								// g_dialog.close();
+
+								var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+								dialog.show(
+									//	'인쇄 요청 중 오류가 발생하였습니다. 다시 시도해 주세요',
+									'제출 데이터 검증과정에서 오류가 발생하였습니다. 다시 시도해 주세요',
+									{
+										//	type : 'toast',
+										//	time : 5,
+										title : '오류'
+									}
+								);
+								bIsOkToClose = true;		// 에러가 난 경우, [닫기] 버튼을 통해 닫을 수 있게 한다.
+
+								clearInterval(iIdInterval);	// 인터벌 클리어
+								iIdInterval = undefined;	// 인터벌 id 초기화
+							}
+						},
+						error : function(objJqXHR, sTestStatus, sErrorThrown){
+
+							fn_layerClose();
+							// g_dialog.close();
+
+							var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+							dialog.show(
+								'제출 처리중 시스템 오류가 발생하였습니다.',
+								{
+									//	type : 'toast',
+									//	time : 5,
+									title : '오류'
+								}
+							);
+							bIsOkToClose = true;		// 에러가 난 경우, [닫기] 버튼을 통해 닫을 수 있게 한다.
+
+							clearInterval(iIdInterval);	// 인터벌 클리어
+							iIdInterval = undefined;	// 인터벌 id 초기화
+						}
+					});
+				}else{
+
+					fn_layerClose();
+					// g_dialog.close();
+
+					var  dialog = new m2soft.crownix.FormDialog('#' + viewerDomId);
+					dialog.show(
+						'제출 처리중 시스템 오류가 발생하였습니다. (제출 체크 횟수 초과)',
+						{
+							//	type : 'toast',
+							//	time : 5,
+							title : '오류'
+						}
+					);
+					bIsOkToClose = true;		// 에러가 난 경우, [닫기] 버튼을 통해 닫을 수 있게 한다.
+
+					clearInterval(iIdInterval);	// 인터벌 클리어
+					iIdInterval = undefined;	// 인터벌 id 초기화
+				}
+			*/	
+			}
+
+			//-- report-finished 에서 호출 해야 함.
+			function fn_sGetQueryStringValue(sFullQs, sQueryStringName){
+				var sQsName = sQueryStringName + "=";
+				//	alert(sFullQs + "\n" + sQsName);
+				var arrOpts = sFullQs.split('&');
+
+				for(var i=0; i<arrOpts.length ; i++){
+					//	alert(i + ' : ' + arrOpts[i].indexOf(sQsName));
+					if(arrOpts[i].indexOf(sQsName) == 0){
+						//	var iIndex = arrOpts[i].indexOf(sQsName) + sQsName.length;
+						var iIndex = sQsName.length;
+						var sSearchValue = arrOpts[i].substr(iIndex);
+						//	alert('***\n' + sSearchValue);
+						return sSearchValue;
+					}
+				}
+			}
+
+			function fn_initQsParam(){
+				// main_url = fn_sGetQueryStringValue(mirroringOptions, 'main_url');
+				// sub_url = fn_sGetQueryStringValue(mirroringOptions, 'sub_url');
+				// server_url = fn_sGetQueryStringVfn_layerOpenalue(mirroringOptions, 'server_url');
+				// submit_url = fn_sGetQueryStringValue(mirroringOptions, 'submit_url');
+				// infotalk_prc = fn_sGetQueryStringValue(mirroringOptions, 'infotalk_prc');
+				// sys_data = fn_sGetQueryStringValue(mirroringOptions, 'sys_data');
+				app_data = fn_sGetQueryStringValue(mirroringOptions, 'app_data');
+			}
+
+			function fn_layerOpen(){				
+				g_dialog.show(
+					// '제출 처리중입니다.\\n\\n잠시만 기다려주세요.',
+					'제출 처리중입니다.<br><br>잠시만 기다려주세요.<br><br><br><div style="text-align:center"><img src="img/loading.gif" alt=""></div>',
+					{
+						outsideClose : false,
+						type : 'toast',
+						time : (iSubmitCheckInterval * iSubmitCheckMaxCount),
+						//	time : iSubmitCheckInterval,
+						title : '안내',											
+						closeHandler : function(){
+							// 사용자가 메세지 창을 닫을 때 실행시킬 함수
+						}
+					}
+				);
+			}
+
+			//-- 레이어팝업 프로그레스바 close
+			function fn_layerClose(){
+				g_dialog.close();
+			}
+
+			/* 
+			//-- 레이어팝업 프로그레스바 open
+			function fn_layerOpen(){
+				var $el = $("#layer2");        //레이어의 id를 $el 변수에 저장
+				$('.dim-layer').fadeIn();
+
+				var $elWidth = ~~($el.outerWidth()),
+					$elHeight = ~~($el.outerHeight()),
+					docWidth = $(document).width(),
+					docHeight = $(document).height();
+
+				// 화면의 중앙에 레이어를 띄운다.
+				if ($elHeight < docHeight || $elWidth < docWidth) {
+					$el.css({
+						marginTop: -$elHeight /2,
+						marginLeft: -$elWidth/2
+					})
+				} else {
+					$el.css({top: 0, left: 0});
+				}
+			}
+
+			//-- 레이어팝업 프로그레스바 close
+			function fn_layerClose(){
+				$('.dim-layer').fadeOut();
+			}
+			*/
+		</script>
+	</body>
+</html>
