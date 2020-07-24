@@ -1,0 +1,46 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Practice Form</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<style type="text/css">
+		#window{
+			width:50%;
+			height:50%;
+			background-Color:lightgray;
+			
+		}
+		#formId2 {
+			display:block;
+		}
+	</style>
+	<script type="text/javascript">
+		function submitVal(){
+			var form = document.formId;
+
+			formId.title.value = document.getElementById('title').value;
+			formId.name.value = document.getElementById('name').value;
+			formId.submit();
+		}
+	</script>
+</head>
+<body>
+	<div id="window">
+		<form id="formId2" name="formId" method="post" action ="./form2.jsp">
+			<ul>
+				<li>
+					<label id="titleL">제목</label>
+					<input type="text" name="title" id="title"/>
+				</li>
+				<li>
+					<label id="nameL">이름</label>
+					<input type="text" name="name" id="name"/>
+				</li>
+			</ul>
+			<input type="button" value="전송" onclick="submitVal()" />
+		</form>
+		<button type="button" value="테이블" onclick="location.href='./form3.jsp'"/>
+	</div>
+</body>
+</html>
