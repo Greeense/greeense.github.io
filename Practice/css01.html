@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html style="margin:0;height:100%">
+	<head>
+		<meta charset="utf-8">
+		<title>css Practice</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<style type='text/css'>
+		body {
+			background-Color:lightblue;
+		}
+
+		#toolbar {
+			background-Color: white;
+			width:100%;
+			height:70%;
+			border:1px solid black;
+		}
+
+		#toolbar>ul{
+			display: inline-block;
+			width:20%;
+			border:1px solid lightblue;
+			margin-left:1.5%;
+			height:50%;
+		}
+		#toolbar>ul>li{
+			list-style-type:none;
+			font-size:15pt;
+			font-weight:bold;
+		}
+		@media screen and (max-width: 1300px) {
+			#toolbar>ul{
+			display: inline-block;
+			width:15%;
+			border:1px solid lightblue;
+			height:50%;
+			}
+		}
+		@media screen and (max-width: 520px) {
+			#toolbar>ul{
+			display: inline-block;
+			width:15%;
+			border:1px solid lightblue;
+			height:50%;
+			}
+		}
+		#menu1:hover {
+			background-Color : lightblue;
+		}
+		#menu2:hover {
+			background-Color : lightblue;
+		}
+		#menu3:hover {
+			background-Color : lightblue;
+		}
+		#menu4:hover {
+			background-Color : lightblue;
+		}
+
+		</style>
+	</head>
+	<body>
+		<!--
+			툴  바
+			------
+			결과화면
+			------
+			선택화면
+		-->
+		<div id="toolbar">
+			<ul class="tool" id="menu1">
+				<li>menu1</li>
+			</ul>
+			<ul class="tool" id="menu2">
+				<li>menu2</li>
+			</ul>
+			<ul class="tool" id="menu3">
+				<li>menu3</li>
+			</ul>
+			<ul class="tool" id="menu4">
+				<li>menu4</li>
+			</ul>
+		</div>
+		<div 
+		<div id="resultView"></div>
+		<div id="selectView"></div>
+	</body>
+</html>
