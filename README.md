@@ -19,7 +19,7 @@
 
 
 ## Vue js 연습
-> [vuePrac01.html](WebCode/vuePrac01.html)
+> [vuePrac01.html](webCode/vuePrac01.html)
 
 ## MSG 프로젝트
 > [MSG 생성중 jsp 다운](Practice/0401.jsp)
