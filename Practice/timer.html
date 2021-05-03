@@ -1,0 +1,132 @@
+<!DOCTYPE>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+</head>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+    /*
+    https://webisfree.com/2016-04-15/%EC%9E%90%EA%B8%B0-%EC%8B%A4%ED%96%89-%ED%95%A8%EC%88%98%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4-%EB%AC%B4%ED%95%9C%EB%B0%98%EB%B3%B5-%EB%A7%8C%EB%93%A4%EA%B8%B0
+    
+    */
+       
+    window.onload=function(){
+        time();
+    }
+    
+    
+    // --------------------clock----------------------
+    function setTime(){
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+        var nowTime = hour+" : "+min+" : "+sec;
+        return nowTime;
+    }
+
+    function time(){
+        setInterval(function(){
+            $('#nowTime_time').text(setTime());
+        },1000); 
+    }
+
+    //  ---------------------timer-----------------------
+    var timer_sec=0; 
+    var timer_min=0;
+    var timer_hour=0;
+    var timer=0;
+    var timer_status=false; 
+    // timer_status = false -> stop, true -> start
+
+    function start(){
+        if(timer_status==false){
+            timer= setInterval(function(){
+                timer_sec++;
+                if(timer_sec >= 60){
+                    timer_sec=0;
+                    timer_min++;
+                    if(timer_min>=60){
+                        timer_min=0;
+                        timer_hour++;
+                        if(timer_hour==24){
+                            stop();
+                        }
+                    }
+                }
+                $('#stopWatch_time').text(timer_hour+" : "+timer_min+" : "+timer_sec);
+            },1000); 
+            console.log("timert_status : " + timer_status);
+            timer_status=true;
+        }                
+    }
+
+    function stop(){
+        if(timer_status==true){
+            clearInterval(timer);
+            console.log("timer_status : "+timer_status);
+            timer_status=false;
+        }        
+    }
+
+    function reset(){
+        clearInterval(timer);
+        timer_sec=0; 
+        timer_min=0;
+        timer_hour=0;
+        $('#stopWatch_time').text(timer_hour+" : "+timer_min+" : "+timer_sec);
+        console.log("timer_status : "+timer_status);
+        timer_status=false;        
+    }
+</script>
+<style type="text/css">
+    .btn {
+        width:130px;
+        height:50px;
+        border: 2px solid gray;
+        font-size:20px;
+        font-weight:800;
+        background-color:lightgreen;
+    }
+    #nowTime {
+        width:400px;
+        height:50px;
+        border: 4px dashed lightgreen;
+    }
+    #nowTime > p {
+        font-size:20pt;
+        font-weight:1000;
+        color:limegreen;
+        margin:5px auto;
+        padding:0px auto;
+        text-align : center;
+    }
+    #stopWatch {
+        width:400px;
+        height:100px;
+        border: 1px solid green;
+    }
+    #stopWatch > p {
+        font-size:20pt;
+        font-weight:1000;
+        color:limegreen;
+        margin:30px auto;
+        padding:0px auto;
+        text-align : center;
+    }
+</style>
+<body>
+
+<div id="nowTime"><p id="nowTime_time"></p> </div>
+</br>
+<div id="stopWatch"><p id="stopWatch_time"></p></div>
+</br>
+<button class="btn" id="start" onclick="start()">start</button>
+<button class="btn" id="stop" onclick="stop()">stop</button>
+<button class="btn" id="reset" onclick="reset()">reset</button>
+
+</body>
+</html>
