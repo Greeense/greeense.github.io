@@ -11,12 +11,6 @@ var item = document.querySelectorAll(".dropBox-year-item");
 yearTextInput.addEventListener('click',showItemList);
 monthTextInput.addEventListener('click',showItemList);
 
-var month_button_back = document.querySelector("#month_button_back");
-var month_button_next = document.querySelector("#month_button_next");
-
-month_button_back.addEventListener('click',month_button_back_click);
-month_button_next.addEventListener('click',month_button_next_click);
-
 function showItemList() {
 	console.log("yearItemSelected -- click");
 	if(itemList.style.display=="none" || itemList.style.display==""){
@@ -51,12 +45,10 @@ function month_button_next_click () {
 
 
 function drawCalendar() {
-		
-	//test--화면실행 시 바로 실행
-	var monthValue = monthTextInput.innerHTML;
-	var yearValue = yearTextInput.innerHTML;
-	//alert("monthTextInput ; "+monthValue+"\n yearTextInput :"+yearValue);
 	
+	var yearValue = yearTextInput.innerHTML;
+	var monthValue = monthTextInput.innerHTML;
+			
 	$.ajax({
 		type : "POST",
 		url : "http://localhost:8080/calendar/drawCalendar.jsp",
@@ -91,7 +83,9 @@ function calendarInit() {
     var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
     var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
     var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
-
+    
+    yearTextInput.innerHTML = currentYear;
+    monthTextInput.innerHTML = currentMonth+1;
     // kst 기준 현재시간
     // console.log(thisMonth);
 
@@ -99,12 +93,14 @@ function calendarInit() {
     renderCalender(thisMonth);
 
     function renderCalender(thisMonth) {
-
         // 렌더링을 위한 데이터 정리
         currentYear = thisMonth.getFullYear();
         currentMonth = thisMonth.getMonth();
         currentDate = thisMonth.getDate();
-
+        
+        yearTextInput.innerHTML = currentYear;
+    	monthTextInput.innerHTML = currentMonth+1;
+        
         // 이전 달의 마지막 날 날짜와 요일 구하기
         var startDay = new Date(currentYear, currentMonth, 0);
         var prevDate = startDay.getDate();
@@ -137,20 +133,22 @@ function calendarInit() {
         // 오늘 날짜 표기
         if (today.getMonth() == currentMonth) {
             todayDate = today.getDate();
-            var currentMonthDate = document.querySelectorAll('.dates .current');
+            var currentMonthDate = document.querySelectorAll('.date .current');
             currentMonthDate[todayDate -1].classList.add('today');
         }
     }
 
     // 이전달로 이동
-    $('.go-prev').on('click', function() {
+    $('#month_button_back').on('click', function() {
         thisMonth = new Date(currentYear, currentMonth - 1, 1);
         renderCalender(thisMonth);
+        
     });
 
     // 다음달로 이동
-    $('.go-next').on('click', function() {
+    $('#month_button_next').on('click', function() {
         thisMonth = new Date(currentYear, currentMonth + 1, 1);
         renderCalender(thisMonth); 
+ 
     });
 }
