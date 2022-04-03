@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+ @import url("css/calendar2.css");
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Serif+KR&" rel="stylesheet">
+<script src="jquery-3.6.0.min.js"></script>
+<script src="mainCalendar2.js" defer></script>
+<body>
+	<!-- Title area -->
+	<div id="title_part">
+		<img id="title_icon_img" src="./img/lamp.png"/>
+		<span>연차날</span>
+	</div>
+	
+	<!-- toolbar area -->
+	<div id="menubar_part">
+		<span>연도</span>
+		<div id="menubar_year">
+			<ul class="selectList" id="menubar_year_list">
+				<li id="year_select"></li>
+				<li class="year_list"></li>
+				<li class="year_list"></li>
+				<li class="year_list"></li>
+			</ul>
+		</div>
+		<span>연차</span>
+		<div id="menubar_restday">
+			<ul class="selectList" id="menubar_restday_list">
+				<li id="restday_select">1일</li>
+				<li class="restday_list">2일</li>
+				<li class="restday_list">3일</li>
+				<li class="restday_list">4일</li>
+			</ul>
+		</div>
+	</div>
+	
+	<!-- calendar list area -->
+	<div id="calendar_part">
+		<div class="calendar_date1">
+			<span class="calendar_part_text">4월 3일</span>
+		</div>
+		<div class="calendar_date2">
+			<span class="calendar_part_text">일</span>
+		</div>
+		<div class="calendar_content">
+			<span class="calendar_part_text">연차쓰는 날</span>
+		</div>
+	</div>
+</body>
+</html>
