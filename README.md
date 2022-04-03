@@ -20,4 +20,4 @@
 > [web timer](Practice/timer.html)
 
 ## 연차 달력
-> [calendar html](calendar/main2.html)
+> [calendar2 html(version2)](calendar/main2.html)
