@@ -1,0 +1,122 @@
+@charset "UTF-8";
+body {
+	background-color : #F9F4D9 ;
+	overflow-x: hidden;  /*스크롤 업애기*/	
+	overflow-y: hidden;  /*스크롤 업애기*/	
+	margin:0;			/*꽉채우기*/
+	height:100%;		/*꽉채우기*/
+}
+
+/* header : title & icon & day search menu*/
+#title_part {
+	display : flex;         /*가운데 배치*/
+	justify-content:center; /*가운데 배치*/
+	margin:5% auto;
+}
+#title_icon_img {
+	float:left;
+	width: 10vw;
+	height: 10vw;
+	text-align : center;
+	object-fit:cover;
+	vertical-align: middle;
+}
+#title_part > span {
+	font-size : 10vw;
+	object-fit:cover;
+	padding-left:10px;
+	font-family: 'Nanum Pen Script', cursive;
+}
+#menubar_part {
+	display : flex;
+	justify-content:center; /*가운데 배치*/
+}
+#menubar_part span {
+	font-size : 3vw;
+	padding : 5px 0px 5px 5px;
+	margin-bottom : 5px;
+	margin-left : 5px;
+	margin-right : 5px;
+	width:10%;
+	text-align : center;
+	font-family: 'Noto Serif KR', serif;
+}
+#menubar_year {
+	width:20%;
+}
+#menubar_restday {
+	width:20%;
+}
+ul.selectList {
+	list-style : none;
+	margin:0px;
+	padding:0px;
+	width:20%;
+	position:absolute;
+}
+ul.selectList>li {
+	font-size : 3vw;
+	padding : 5px 0px 5px 5px;
+	margin-bottom : 5px;
+	text-align:center;
+	font-family: 'Noto Serif KR', serif;
+	background-color : #FFFFFF;
+	border-radius:5px;
+}
+ul.selectList>li:hover {
+	color:#FFFFFF;
+	background-color : #1E7D33;
+	border-radius:5px;
+}
+ul.selectList>li:active {
+	color:#FFFFFF;
+	background-color : #1E7D33;
+	border-radius:5px;
+}
+.year_list {
+	display:none;
+}
+.restday_list {
+	display:none;
+}
+#year_select {
+	color:#FFFFFF;
+	background-color : #1E7D33;
+	border-radius:5px;
+}
+#restday_select {
+	color:#FFFFFF;
+	background-color : #1E7D33;
+	border-radius:5px;
+}
+
+/* body : calendar */
+#calendar_part {
+	margin-top:5%;
+	margin-left:5%;
+	margin-right:5%;
+	display:flex;
+	/*display:flex;
+	justify-content:center; */
+	border:1px solid black;
+	border-radius:5px;
+}
+.calendar_date1 {
+	float:left;
+	width:20%;
+	text-align:center;
+}
+.calendar_date2 {
+	float:left;
+	width:20%;
+	text-align:center;
+	margin-right:5%;
+}
+.calendar_content {
+	float:left;
+	width:50%;
+}
+.calendar_part_text {
+	font-family: 'Noto Serif KR', serif;
+	font-size : 3vw;
+}
