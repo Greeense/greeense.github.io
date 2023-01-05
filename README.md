@@ -1,23 +1,15 @@
-생성중인 git hub 블로그입니다. 
+# 블로그
 
+개발 및 취미관련 블로그 링크
 
-![main](/Image/library.png){: .center}
+💚 네이버블로그
 
+[Daatabase::My Database : 네이버 블로그](https://blog.naver.com/grandse)
 
-## Categories
+🧡 Tistory 블로그
 
-> [마크다운 연습](Practice/MDPratice.md)
+[greeense.log](https://greeense-log.tistory.com/)
 
-> [잡담](Board/board_reademe.md)
+🖤 Velog.io
 
-> [하고싶은 목록(초고)](Board/DoAnything.md)
-
-## html 작성확인
-> [Hello test html](Practice/hello.html)
-
-> [css01_html](Practice/css01.html)
-
-> [web timer](Practice/timer.html)
-
-## 연차 달력
-> [calendar2 html(version2)](calendar/main2.html)
+[grin_55 (모카 엘리스) - velog](https://velog.io/@grin_55)
