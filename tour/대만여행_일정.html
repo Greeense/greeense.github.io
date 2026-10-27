@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>대만 3박 4일 일정</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 레이아웃: 노랑→분홍 그라데이션 헤더 카드 + 알약 탭, 아래 세로 타임라인 위 둥근 카드(장소)와 점선 이동 칸 */
+:root{
+  --bg:#fff9ea; --card:#ffffff; --fg:#43283a; --muted:#9a7487; --line:#f7d6e2;
+  --accent:#f0628f; --accent-2:#ffc93c; --accent-fg:#ffffff; --soft:#fff0f5;
+  --hero-a:#ffe27a; --hero-b:#ffb3cb; --hero-fg:#4a2338; --glass:rgba(255,255,255,.62);
+  --dot-move:#6b4359; --dot-food:#f0628f; --dot-sight:#ffc22e; --dot-stay:#8f9cf0; --dot-shop:#d084e6;
+  --tint-move:#f6eaf0; --tint-food:#ffe4ee; --tint-sight:#fff2c2; --tint-stay:#e9ecff; --tint-shop:#f7e6fc;
+  --warn:#d23d6c; --warn-bg:#ffe4ee; --past-card:#f3ead6; --now-bg:#ffe3ec; --shadow:0 6px 18px -10px rgba(214,90,135,.45);
+  --f-display:"Jua","Gowun Dodum","Noto Sans KR",system-ui,sans-serif;
+  --f-body:"Noto Sans KR",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1e1519; --card:#2b1f26; --fg:#fdeff4; --muted:#c7a5b6; --line:#4b3341;
+  --accent:#ff8fb4; --accent-2:#ffd45e; --accent-fg:#2a0f1c; --soft:#36232d;
+  --hero-a:#5a4416; --hero-b:#5c2740; --hero-fg:#fff3f7; --glass:rgba(30,18,24,.45);
+  --dot-move:#e9cfdc; --dot-food:#ff8fb4; --dot-sight:#ffd45e; --dot-stay:#a8b2f7; --dot-shop:#e2a6f2;
+  --tint-move:#3a2a33; --tint-food:#4a2234; --tint-sight:#45391a; --tint-stay:#2b2e4a; --tint-shop:#3e2648;
+  --warn:#ffa3c2; --warn-bg:#4a2234; --past-card:#18110f; --now-bg:#45253a; --shadow:0 6px 18px -10px rgba(0,0,0,.7); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1e1519; --card:#2b1f26; --fg:#fdeff4; --muted:#c7a5b6; --line:#4b3341;
+  --accent:#ff8fb4; --accent-2:#ffd45e; --accent-fg:#2a0f1c; --soft:#36232d;
+  --hero-a:#5a4416; --hero-b:#5c2740; --hero-fg:#fff3f7; --glass:rgba(30,18,24,.45);
+  --dot-move:#e9cfdc; --dot-food:#ff8fb4; --dot-sight:#ffd45e; --dot-stay:#a8b2f7; --dot-shop:#e2a6f2;
+  --tint-move:#3a2a33; --tint-food:#4a2234; --tint-sight:#45391a; --tint-stay:#2b2e4a; --tint-shop:#3e2648;
+  --warn:#ffa3c2; --warn-bg:#4a2234; --past-card:#18110f; --now-bg:#45253a; --shadow:0 6px 18px -10px rgba(0,0,0,.7); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:520px;margin:0 auto}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* 헤더 */
+.top{position:relative;z-index:5;background:var(--bg);padding-block:12px 8px}
+.hero{position:relative;overflow:hidden;border-radius:24px;padding:16px 16px 14px;color:var(--hero-fg);
+  background:linear-gradient(135deg,var(--hero-a) 0%,var(--hero-b) 100%);box-shadow:var(--shadow)}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:var(--glass);pointer-events:none}
+.hero::before{width:120px;height:120px;right:-40px;top:-50px;opacity:.5}
+.hero::after{width:60px;height:60px;left:46%;bottom:-34px;opacity:.45}
+.hd{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.hd-l{min-width:0}
+.kicker{font-size:12px;letter-spacing:.06em;opacity:.8}
+.dayno{font-family:var(--f-display);font-size:34px;line-height:1.05;margin-top:2px}
+.dayno small{font-size:18px;margin-left:2px}
+.date{font-size:13px;margin-top:6px;font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.clock-pill{display:inline-flex;align-items:center;gap:4px;background:var(--glass);border-radius:999px;padding:1px 9px;font-weight:700}
+.clock-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.dayline{margin-top:14px;padding-bottom:8px;border-bottom:1px dotted var(--line);font-size:13px;color:var(--muted)}
+.dayline b{font-family:var(--f-display);font-weight:400;font-size:17px;color:var(--fg);margin-right:6px}
+.wx{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex:none}
+.wx-chip{display:flex;align-items:center;gap:6px;background:var(--glass);border:0;border-radius:16px;padding:6px 10px 6px 6px;cursor:pointer;text-align:left;color:var(--hero-fg);backdrop-filter:blur(6px)}
+.wx-chip svg{width:30px;height:30px;flex:none}
+.wx-city{font-size:11px;line-height:1.2;opacity:.85}
+.wx-t{font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap;font-family:var(--f-display)}
+.wx-now{font-size:22px}
+.wx-lh{font-size:12px;opacity:.8}
+.wx-note{font-size:10.5px;text-align:right;opacity:.85}
+.wx-note a{font-weight:700}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px;background:var(--card);border-radius:999px;padding:4px;box-shadow:var(--shadow)}
+.tab{border:0;background:none;border-radius:999px;padding:6px 2px;cursor:pointer;line-height:1.15}
+.tab b{display:block;font-family:var(--f-display);font-weight:400;font-size:15px}
+.tab span{font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-fg)}
+.tab[aria-selected="true"] span{color:inherit;opacity:.9}
+.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 12px;margin-top:10px;font-size:11.5px;color:var(--muted)}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:1px}
+
+/* 날씨 편집 */
+.wxed{background:var(--card);border-radius:18px;padding:14px;margin-top:10px;display:grid;gap:12px;box-shadow:var(--shadow)}
+.wxed-row{display:grid;gap:6px}
+.wxed-row h4{margin:0;font-size:13px;font-weight:500}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.temps{display:flex;gap:10px;align-items:center;font-size:13px;flex-wrap:wrap}
+.temps label{display:flex;align-items:center;gap:6px}
+.temps input{width:60px;padding:5px 8px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font:inherit;font-variant-numeric:tabular-nums}
+.wxed-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.btn-sm{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:13px}
+
+/* 타임라인 */
+.tl{position:relative;z-index:0;margin-top:10px;padding-left:30px}
+.tl::before{content:"";position:absolute;left:10px;top:14px;bottom:14px;width:0;border-left:3px dotted var(--line)}
+.stop{position:relative;padding-block:6px}
+.dot{position:absolute;left:-28px;top:22px;width:18px;height:18px;border-radius:50%;border:4px solid var(--bg);box-shadow:0 0 0 2px var(--line)}
+.k-move .dot{background:var(--dot-move)} .k-food .dot{background:var(--dot-food)} .k-sight .dot{background:var(--dot-sight)}
+.k-stay .dot{background:var(--dot-stay)} .k-shop .dot{background:var(--dot-shop)}
+.card{background:var(--card);border-radius:18px;padding:12px 12px 12px 14px;box-shadow:var(--shadow)}
+.s-head{display:flex;align-items:flex-start;gap:10px}
+.s-main{flex:1;min-width:0}
+.s-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px}
+.s-time{font-family:var(--f-display);font-size:15px;font-variant-numeric:tabular-nums}
+.kpill{font-size:11px;padding:1px 8px;border-radius:999px;font-weight:500}
+.k-move .kpill{background:var(--tint-move)} .k-food .kpill{background:var(--tint-food)} .k-sight .kpill{background:var(--tint-sight)}
+.k-stay .kpill{background:var(--tint-stay)} .k-shop .kpill{background:var(--tint-shop)}
+.s-name{font-family:var(--f-display);font-size:19px;line-height:1.3;margin-top:3px;text-wrap:balance}
+.s-sub{font-size:12px;color:var(--muted)}
+.s-note{font-size:13px;color:var(--muted);margin-top:3px}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;background:var(--warn-bg);color:var(--warn);font-weight:700}
+.maplink{flex:none;display:inline-flex;align-items:center;gap:3px;height:30px;padding:0 11px 0 9px;border-radius:999px;
+  background:var(--soft);color:var(--accent);text-decoration:none;font-size:12px;font-weight:700}
+.maplink svg{width:14px;height:14px}
+.s-act{flex:none;display:flex;flex-direction:column;gap:5px;align-items:stretch}
+.s-act .maplink{justify-content:center}
+.maplink.go{background:var(--accent);color:var(--accent-fg)}
+.locrow{position:relative;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:12.5px}
+.loc-btn{display:inline-flex;align-items:center;gap:4px;border:0;border-radius:999px;padding:4px 11px 4px 8px;background:var(--glass);color:var(--hero-fg);font-weight:700;cursor:pointer;font-size:12.5px}
+.loc-btn svg{width:14px;height:14px}
+#loctxt{min-width:0;opacity:.9}
+.extras{margin-top:10px;display:grid;gap:6px}
+.ex{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;text-decoration:none;background:var(--bg)}
+.ex .ex-k{flex:none;width:8px;height:8px;border-radius:50%}
+.ex .ex-t{flex:1;min-width:0;font-size:13.5px}
+.ex .ex-d{display:block;font-size:11.5px;color:var(--muted)}
+.ex .arrow{flex:none;color:var(--accent);font-size:12px;font-weight:700}
+.ex-label{font-size:11px;color:var(--muted);letter-spacing:.06em}
+
+/* 이동 */
+.tr{position:relative;padding-block:2px}
+.tr-btn{display:inline-flex;align-items:center;gap:6px;max-width:100%;background:var(--card);border:1px dashed var(--line);border-radius:999px;padding:5px 12px 5px 8px;cursor:pointer;text-align:left;color:var(--muted);font-size:12.5px}
+.tr-btn svg.mode{width:18px;height:18px;flex:none;color:var(--accent)}
+.tr-btn .tr-txt{min-width:0}
+.tr-btn .tr-txt b{color:var(--fg);font-weight:500}
+.tr-btn .chev{flex:none;transition:transform .2s;color:var(--accent);display:flex}
+.tr-btn[aria-expanded="true"]{border-style:solid;border-color:var(--accent)}
+.tr-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.tr-static{display:inline-flex;align-items:center;gap:6px;padding:5px 4px;color:var(--muted);font-size:12.5px}
+.tr-static svg{width:18px;height:18px;color:var(--accent)}
+.tr-panel{background:var(--soft);border-radius:16px;padding:12px;margin:6px 0 4px;display:grid;gap:10px}
+.gm{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--accent);color:var(--accent-fg);text-decoration:none;border-radius:999px;padding:10px;font-weight:700}
+.gm svg{width:16px;height:16px}
+.strip{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:center;font-size:13px}
+.strip .sd{width:12px;height:12px;border-radius:50%;border:3px solid var(--accent);background:var(--card)}
+.strip .sd.end{background:var(--accent-2);border-color:var(--accent-2)}
+.strip .sl{width:0;height:14px;border-left:2px dotted var(--accent);margin-left:5px}
+.tip{font-size:12px;color:var(--muted)}
+
+/* 지난 일정 / 지금 */
+.past .card{background:var(--past-card);box-shadow:none}
+.past .card>*{opacity:.5}
+.past .dot{background:var(--muted)!important}
+.tr.past{opacity:.45}
+.now-badge{font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--accent);color:var(--accent-fg)}
+.now .card{background:var(--now-bg);box-shadow:0 0 0 1.5px var(--accent),var(--shadow)}
+.now .ex{background:var(--card)}
+.now .dot{box-shadow:0 0 0 2px var(--accent),0 0 0 7px var(--soft)}
+.foot{margin-top:28px;font-size:12px;color:var(--muted);display:grid;gap:4px}
+/* 공금 */
+.pot{position:relative;margin-top:10px;background:var(--glass);border-radius:14px;padding:9px 12px;display:grid;gap:6px}
+.pot-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.pot-lbl{font-size:12px;opacity:.85}
+.pot-left{font-family:var(--f-display);font-size:22px;font-variant-numeric:tabular-nums}
+.pot-left.neg{color:var(--warn)}
+.pot-sub{font-size:11.5px;opacity:.85;font-variant-numeric:tabular-nums}
+.pot-bar{height:6px;border-radius:999px;background:rgba(255,255,255,.55);overflow:hidden}
+.pot-bar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.pot-edit{border:0;background:none;color:var(--hero-fg);font-weight:700;font-size:12px;text-decoration:underline;cursor:pointer;padding:0}
+.pot-form{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px}
+.pot-form input{width:70px;font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:5px 8px;font-variant-numeric:tabular-nums}
+.pot-start{border:0;border-radius:999px;padding:6px 12px;background:var(--glass);color:var(--hero-fg);font-weight:700;cursor:pointer;font-size:12.5px;justify-self:start}
+/* 금액 입력 · 정산 */
+.money{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:9px;border-top:1px dotted var(--line);font-size:12.5px;color:var(--muted)}
+.money input,.money select,.st-in,.st-sel{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:5px 8px}
+.money input{width:96px;font-variant-numeric:tabular-nums}
+.money .won{font-size:11.5px}
+.tr-panel .money{margin-top:0;border-top:0;padding-top:0}
+.amt-badge{color:var(--accent);font-weight:700}
+.settle{margin-top:22px;display:grid;gap:12px}
+.settle-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;border:0;border-radius:16px;padding:14px;cursor:pointer;
+  background:linear-gradient(135deg,var(--hero-a),var(--hero-b));color:var(--hero-fg);font-family:var(--f-display);font-size:19px;box-shadow:var(--shadow)}
+.st-panel{background:var(--card);border-radius:18px;padding:14px;box-shadow:var(--shadow);display:grid;gap:16px}
+.st-sec{display:grid;gap:8px}
+.st-sec h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:17px}
+.st-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px}
+.st-row .st-in{min-width:0}
+.st-name{width:96px}
+.st-num{width:96px;font-variant-numeric:tabular-nums}
+.st-grow{flex:1 1 120px}
+.st-exrow .st-grow{flex-basis:100%}
+.st-x{border:0;background:var(--soft);color:var(--accent);border-radius:8px;width:28px;height:28px;cursor:pointer}
+.st-add{border:1px dashed var(--accent);background:none;color:var(--accent);border-radius:10px;padding:6px 12px;cursor:pointer;font-size:13px;justify-self:start}
+.st-total{display:flex;justify-content:space-between;align-items:baseline;gap:8px;background:var(--soft);border-radius:12px;padding:10px 12px}
+.st-total b{font-family:var(--f-display);font-weight:400;font-size:24px;color:var(--accent);font-variant-numeric:tabular-nums}
+.st-table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.st-table th,.st-table td{padding:6px 4px;border-bottom:1px dotted var(--line);text-align:right}
+.st-table th:first-child,.st-table td:first-child{text-align:left}
+.st-table th{font-weight:500;color:var(--muted);font-size:12px}
+.plus{color:#2f8f5b} .minus{color:var(--warn)}
+.st-send{display:grid;gap:6px}
+.st-send div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:14px}
+.st-send b{color:var(--accent)}
+.st-foot{display:flex;gap:6px;flex-wrap:wrap;justify-content:space-between}
+.st-note{font-size:12px;color:var(--muted)}
+.copy{margin-top:32px;padding-top:14px;border-top:1px dotted var(--line);text-align:center;font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+@media (prefers-reduced-motion: reduce){.tr-btn .chev{transition:none}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="hero">
+    <div class="hd">
+      <div class="hd-l">
+        <div class="kicker">TAIWAN 3박 4일 · 11/12 ~ 11/15</div>
+        <div class="dayno" id="dayno"></div>
+        <div class="date" id="date"></div>
+      </div>
+      <div class="wx" id="wx"></div>
+    </div>
+    <div class="locrow"><button class="loc-btn" id="locbtn" type="button"></button><span id="loctxt"></span></div>
+    <div id="potbox"></div>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="legend">
+      <span><i style="background:var(--dot-move)"></i>공항·이동</span>
+      <span><i style="background:var(--dot-food)"></i>식당</span>
+      <span><i style="background:var(--dot-sight)"></i>관광지</span>
+      <span><i style="background:var(--dot-shop)"></i>쇼핑</span>
+      <span><i style="background:var(--dot-stay)"></i>숙소</span>
+    </div>
+  </div>
+  <div class="dayline" id="route"></div>
+  <div class="tl" id="tl"></div>
+  <div class="settle" id="settle"></div>
+  <footer class="copy">© 2026 돼지물고기들. All rights reserved.</footer>
+</div>
+
+<script>
+const enc=encodeURIComponent;
+const S=q=>"https://www.google.com/maps/search/?api=1&query="+enc(q);
+const D=(o,d,m)=>"https://www.google.com/maps/dir/?api=1&origin="+enc(o)+"&destination="+enc(d)+"&travelmode="+m;
+const G=id=>"https://maps.app.goo.gl/"+id;
+const KC={move:"var(--dot-move)",food:"var(--dot-food)",sight:"var(--dot-sight)",stay:"var(--dot-stay)",shop:"var(--dot-shop)"};
+const KL={move:"이동",food:"식당",sight:"관광지",stay:"숙소",shop:"쇼핑"};
+const ML={walk:"걸어가기",taxi:"택시",mrt:"지하철(MRT)",thsr:"고속철도(THSR)",train:"기차",plane:"비행기",bus:"리무진 버스",ride:"택시 또는 지하철"};
+const GM={walk:"walking",taxi:"driving",ride:"transit",mrt:"transit",thsr:"transit",train:"transit",bus:"transit"};
+
+const HOME=G("4fAhJyUrJ3THCjoJ6");
+const LIN="The Lin Hotel Taichung";
+
+const DAYS=[
+{n:1,date:"2026-11-12",dow:"목",route:"타이중 도착 → 타이베이 시먼딩 · 다다오청 · 용산사",
+ wx:[{city:"타이베이",w:"cloud",lo:19,hi:24}],
+ items:[
+  {t:"07:50",k:"move",name:"인천공항 출발",sub:"제2여객터미널",q:"인천국제공항 제2여객터미널"},
+  {tr:"plane",dur:"약 2시간 10분"},
+  {t:"10:00",k:"move",name:"타이중 공항 도착",q:"台中國際機場"},
+  {tr:"taxi",dur:"25분",cost:"약 1,000달러",o:"台中國際機場",d:"高鐵台中站",oL:"타이중 공항",dL:"고속철도 타이중역"},
+  {t:"11:10",k:"move",name:"고속철도 타이중역",q:"高鐵台中站"},
+  {tr:"thsr",dur:"11:39 탑승 · 60분",cost:"예약 필요",o:"高鐵台中站",d:"台北車站",oL:"고속철도 타이중역",dL:"타이베이역",st:true},
+  {t:"12:29",k:"move",name:"타이베이역 도착",q:"台北車站"},
+  {tr:"walk",dur:"약 10분",o:"台北車站",d:"張記鍋貼牛肉麵",oL:"타이베이역",dL:"장씨 우육면"},
+  {t:"13:00",k:"food",name:"장씨 우육면",sub:"張記鍋貼牛肉麵",link:G("NkqsAe56RzTGLCo36"),note:"점심 · 약 50분 · 1인 약 500달러",tags:["현금만","예약 불가"]},
+  {tr:"walk",dur:"10~15분",o:"張記鍋貼牛肉麵",d:"西門町",oL:"장씨 우육면",dL:"시먼딩"},
+  {t:"13:50",k:"sight",name:"시먼딩",link:G("oqfRPwUFhtRz5WeU8"),note:"거리 구경 · 약 1시간"},
+  {tr:"mrt",dur:"1정거장",o:"西門站",d:"台北車站",oL:"시먼역",dL:"타이베이역",st:true},
+  {t:"15:00",k:"stay",name:"에어비앤비 체크인",sub:"클릭호텔 타이베이 메인역 옆",link:HOME,note:"짐 풀고 20분 휴식"},
+  {tr:"walk",dur:"20분",o:"台北車站",d:"迪化街",oL:"숙소",dL:"디화제"},
+  {t:"15:40",k:"sight",name:"디화제 · 다다오청",q:"迪化街",note:"전통 상점과 거리 구경 · 약 1시간",
+   ex:[{k:"sight",name:"융러시장",d:"10~18시 · 일요일 휴무",q:"永樂市場 台北"},
+       {k:"sight",name:"샤하이 성황묘",d:"7~19시",q:"臺北霞海城隍廟"},
+       {k:"food",name:"난찌에드어이 (카페·다과)",d:"10:30~18:20",link:G("n62yBa51FfXeYHmg9")}]},
+  {tr:"walk",dur:"10분",o:"臺北霞海城隍廟",d:"大稻埕碼頭",oL:"샤하이 성황묘",dL:"다다오청 부두"},
+  {t:"17:00",k:"sight",name:"다다오청 부두 컨테이너 마켓",link:G("UhwdLYpnVbVTfQvm8"),note:"해 지는 거 보면서 맥주 한잔"},
+  {tr:"mrt",dur:"지하철",o:"大橋頭站",d:"龍山寺站",oL:"다차오터우역",dL:"룽산쓰(용산사)역",st:true},
+  {t:"18:00",k:"food",name:"훠거 · 황지아 훠궈",link:G("8wm5QnX8MHFNzEq27"),note:"저녁 · 약 90분 · 23시까지 · 까르푸 꾸이린점 근처"},
+  {tr:"walk",dur:"5분 안팎",o:"家樂福 桂林店",d:"龍山寺",oL:"까르푸 꾸이린점 근처",dL:"용산사"},
+  {t:"19:30",k:"sight",name:"용산사",link:G("fiCRpFnq31RYPGr77"),note:"6~22시 · 일정표엔 17:30으로 적혀 있어서 훠거 뒤로 뒀어요",
+   ex:[{k:"food",name:"커부커 홍차요구르트 (용산사점)",d:"10~22시",link:G("EVzmVEc766egw8q97")}]},
+  {tr:"walk",dur:"3분",o:"龍山寺",d:"華西街觀光夜市",oL:"용산사",dL:"화시제 야시장"},
+  {t:"20:00",k:"sight",name:"화시제 야시장",q:"華西街觀光夜市",note:"16~24시 · 약 1시간"},
+  {tr:"walk",dur:"10분 안팎",o:"華西街觀光夜市",d:"家樂福 桂林店",oL:"화시제 야시장",dL:"까르푸 꾸이린점"},
+  {t:"21:00",k:"shop",name:"까르푸 → 시먼딩 → 돈키호테",note:"과일 사기 · 약 2시간",
+   ex:[{k:"shop",name:"까르푸 꾸이린점",d:"24시간 · 과일",link:G("GaoKMTQfiTrGwjPP6")},
+       {k:"shop",name:"돈키호테 시먼점",q:"唐吉訶德 西門"},
+       {k:"food",name:"지파이 (雞郎隊雞排 西門店)",link:G("CrX5RgBQdheLDfaB7")}]},
+  {tr:"mrt",dur:"1정거장",o:"西門站",d:"台北車站",oL:"시먼역",dL:"타이베이역",st:true},
+  {t:"23:00",k:"stay",name:"숙소 도착",link:HOME}
+ ]},
+{n:2,date:"2026-11-13",dow:"금",route:"베이터우 → 린안타이 고택 → 융캉제 → 술",
+ wx:[{city:"타이베이",w:"cloud",lo:19,hi:24}],
+ items:[
+  {t:"09:00",k:"stay",name:"숙소 출발",sub:"타이베이역",link:HOME},
+  {tr:"mrt",dur:"50분",o:"台北車站",d:"新北投站",oL:"타이베이역",dL:"신베이터우역",st:true},
+  {t:"09:50",k:"move",name:"신베이터우역 도착",q:"新北投站"},
+  {tr:"walk",dur:"2분",o:"新北投站",d:"北投公園",oL:"신베이터우역",dL:"베이터우 공원"},
+  {t:"10:00",k:"sight",name:"베이터우 온천 마을",note:"약 2시간",
+   ex:[{k:"sight",name:"베이터우 공원",d:"24시간",q:"北投公園"},
+       {k:"sight",name:"온천 박물관",d:"10~18시 · 월요일 휴관",q:"北投溫泉博物館"},
+       {k:"sight",name:"베이터우 도서관",d:"8:30~21시",link:G("Kf3Wc8KGoRnjCnMd6")},
+       {k:"sight",name:"지열곡",d:"9~17시",link:G("M2AUjT5w2x4HAwwp8")}]},
+  {t:"12:00",k:"food",name:"지열곡 근처 가벼운 식사",link:"https://maps.app.goo.gl/EDPhMiJJTQDW4Szs8",note:"약 30분 · 가게는 아직 미정",
+   exLabel:"식당 후보 · 근처 볼거리",
+   ex:[{k:"food",name:"Tea Colors Café (마라 온천란)",link:G("e36ymbVC6vpF9VFH6")},
+       {k:"food",name:"雙月食品社 북투점 (찜·조림·탕)",link:G("tS5VCBK4DUD5jL8q9")},
+       {k:"sight",name:"푸싱공원 족욕장",d:"화~일 8~18시",q:"復興公園泡腳池 北投"}]},
+  {tr:"ride",dur:"30분",cost:"약 200달러",o:"新北投站",d:"林安泰古厝",oL:"신베이터우역",dL:"린안타이 고택"},
+  {t:"14:00",k:"sight",name:"린안타이 고택",link:G("oUc7iW7bEZUSTPMy5"),note:"옛날 집 구경 · 40~50분 · 9~17시"},
+  {tr:"ride",dur:"20분",cost:"약 300달러",o:"林安泰古厝",d:"永康街",oL:"린안타이 고택",dL:"융캉제"},
+  {t:"15:10",k:"sight",name:"융캉제",link:G("4LP8keXsciiTnGvm9"),note:"거리 구경 · 간식 · 기념품",
+   ex:[{k:"food",name:"천진총좌빙",link:G("TqSTm6T5zme4YR3VA")},
+       {k:"food",name:"JUELIN 에그롤",d:"12~19시 · 현금만",q:"JUELIN爵林堅果 永康店"},
+       {k:"food",name:"상신찬옥 (마카다미아 누가)",q:"상신찬옥 융캉제"},
+       {k:"shop",name:"마마우산",d:"뻬이따이·기념품",link:G("CWqv561DSFFwzFaZA")},
+       {k:"shop",name:"왕덕전 (차)",d:"12시 오픈",link:G("SRr8KNVeAYys8HoWA")},
+       {k:"shop",name:"LAI HAO 소품샵",d:"9~21시",link:G("7cpWbEePM454VTyR8")}]},
+  {t:"저녁",k:"food",name:"술 한잔 (아직 미정)",note:"2일차 제목에 '술'이 있는데 장소는 안 정해졌어요",
+   exLabel:"후보",
+   ex:[{k:"food",name:"100엔 (18일 맥주)",d:"17~1시 · 현금만",q:"No. 68, Leli Rd, Da'an District, Taipei"}]},
+  {t:"밤",k:"stay",name:"숙소",link:HOME}
+ ]},
+{n:3,date:"2026-11-14",dow:"토",route:"스펀 → 중정기념관 → 타이중 무위초당 · 펑지아 야시장",
+ wx:[{city:"타이베이",w:"cloud",lo:19,hi:24},{city:"타이중",w:"sun",lo:20,hi:26}],
+ items:[
+  {t:"아침",k:"food",name:"아침식사 (아직 미정)",exLabel:"후보",
+   ex:[{k:"food",name:"永和豆漿大王 (또우장)",link:G("HfnSBeZnhfgdM2MW9")},
+       {k:"food",name:"4+ Break Breakfast (딴삥)",d:"6~11시",q:"小倆口早餐 松江路"}]},
+  {t:"09:00",k:"move",name:"타이베이역 짐 보관 후 출발",q:"台北車站"},
+  {tr:"train",dur:"70분",o:"台北車站",d:"十分車站",oL:"타이베이역",dL:"스펀역",st:true},
+  {t:"10:10",k:"sight",name:"스펀",note:"풍등 날리기 · 폭포 구경 · 약 2시간",link:G("jmZw8u5ChXzAiKTV8"),
+   ex:[{k:"sight",name:"스펀 천등광장",d:"24시간",link:G("jmZw8u5ChXzAiKTV8")},
+       {k:"sight",name:"스펀 폭포",d:"9~16:30",link:G("NHAd9an1FwPDboAUA")},
+       {k:"food",name:"멧돼지 소시지",d:"10:30~18시 · 생마늘이랑 같이",q:"十分黑豬肉香腸"}]},
+  {tr:"train",dur:"70분",o:"十分車站",d:"中正紀念堂站",oL:"스펀역",dL:"중정기념당역",st:true},
+  {t:"13:20",k:"sight",name:"중정기념관",link:G("r4ueV2m1cgkBXyTo7"),note:"약 30분 · 9~18시"},
+  {tr:"mrt",dur:"2정거장",o:"中正紀念堂站",d:"台北車站",oL:"중정기념당역",dL:"타이베이역",st:true},
+  {t:"14:00",k:"food",name:"점심 + 쇼핑 마무리",sub:"타이베이역 근처 · 가게 미정",exLabel:"후보",
+   ex:[{k:"food",name:"하오지쉐이자오 (이연복 새우만두)",q:"하오지쉐이자오 타이베이"},
+       {k:"food",name:"劉山東 우육면",link:G("5Cz8Tv2t5v666Vc3A")},
+       {k:"shop",name:"타이베이 애니메이트",d:"10~22시",link:G("hWQ23NzvhLxck9nv9")}]},
+  {tr:"thsr",dur:"17:00 · 60분",cost:"예약 필요",o:"台北車站",d:"高鐵台中站",oL:"타이베이역",dL:"고속철도 타이중역",st:true},
+  {t:"18:30",k:"stay",name:"더 린 호텔",sub:"짐 맡기기 또는 체크인",q:LIN},
+  {tr:"taxi",dur:"20분",o:LIN,d:"無為草堂",oL:"더 린 호텔",dL:"무위초당"},
+  {t:"19:20",k:"food",name:"무위초당",sub:"無為草堂 · 찻집",link:G("b8qzXe9zdndAR8Ey7"),note:"저녁 · 약 1시간"},
+  {tr:"taxi",dur:"20분",o:"無為草堂",d:LIN,oL:"무위초당",dL:"더 린 호텔"},
+  {t:"20:40",k:"stay",name:"호텔 복귀 · 휴식",q:LIN},
+  {tr:"taxi",dur:"택시",o:LIN,d:"逢甲夜市",oL:"더 린 호텔",dL:"펑지아 야시장"},
+  {t:"밤",k:"sight",name:"펑지아 야시장",q:"逢甲夜市",note:"14~02시 · 시간 미정",
+   ex:[{k:"food",name:"춘수당 (버블티 · 우육면)",d:"11~21시 · 일정표 제목에만 있어요",q:"春水堂 朝馬"}]}
+ ]},
+{n:4,date:"2026-11-15",dow:"일",route:"타이중 시내 투어 → 궁원안과 · 취월루 → 귀국",
+ wx:[{city:"타이중",w:"sun",lo:20,hi:26}],
+ items:[
+  {t:"아침",k:"stay",name:"더 린 호텔 조식",q:LIN},
+  {t:"11:00",k:"stay",name:"체크아웃",q:LIN},
+  {t:"오전",k:"sight",name:"타이중 시내 투어",
+   ex:[{k:"food",name:"궁원안과 아이스크림",d:"옛날 안과 건물",link:G("KCyQAxfDaZsuH3EC6")},
+       {k:"shop",name:"심계신촌",link:G("qrAjHVYu7Qv7PSh37")}]},
+  {t:"13:00",k:"food",name:"취월루",sub:"Moon Pavilion · 궁원안과 2층",link:G("KhFFD2CWgtQuTffGA"),note:"점심",tags:["예약 필요 · 13:00"]},
+  {tr:"taxi",dur:"40~60분",cost:"약 1,000달러",o:"宮原眼科",d:"台中國際機場",oL:"궁원안과",dL:"타이중 공항"},
+  {t:"15:30",k:"move",name:"타이중 공항 도착",q:"台中國際機場"},
+  {t:"18:30",k:"move",name:"타이중 출발",q:"台中國際機場"},
+  {tr:"plane",dur:"비행기"},
+  {t:"22:15",k:"move",name:"인천공항 도착",q:"인천국제공항 제2여객터미널"},
+  {tr:"bus",dur:"N6703번",link:"https://www.klimousine.com/bus/limousine.php?bus_no=N6703#inner",linkL:"리무진 시간표 보기"},
+  {t:"",k:"stay",name:"집 도착"}
+ ]}
+];
+
+/* 아이콘 */
+const IC={
+ sun:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="6" fill="#f2b705"/><g stroke="#f2b705" stroke-width="2.2" stroke-linecap="round"><path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.8 6.8l2.8 2.8M22.4 22.4l2.8 2.8M6.8 25.2l2.8-2.8M22.4 9.6l2.8-2.8"/></g></svg>',
+ cloud:'<svg viewBox="0 0 32 32"><path d="M9 24h14a5 5 0 0 0 .6-10A7 7 0 0 0 10 12.5 5.8 5.8 0 0 0 9 24z" fill="#9fb0ba"/></svg>',
+ rain:'<svg viewBox="0 0 32 32"><path d="M9 19h14a5 5 0 0 0 .6-10A7 7 0 0 0 10 7.5 5.8 5.8 0 0 0 9 19z" fill="#8a9ca7"/><g stroke="#3b82c4" stroke-width="2.2" stroke-linecap="round"><path d="M11 23l-1.5 4M17 23l-1.5 4M23 23l-1.5 4"/></g></svg>',
+ pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+ nav:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>',
+ coin:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5c-.5-1-1.5-1.5-2.5-1.5-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-2-.5-2.5-1.5M12 6.5v1.5M12 16v1.5"/></svg>',
+ chev:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>',
+ walk:'<svg class="mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="M10 21l2-6 3 3v3M8 12l3-4 3 2 2 3M11 8l-1 5"/></svg>',
+ taxi:'<svg class="mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 16v-4l2-5h12l2 5v4z"/><path d="M9 7l1-3h4l1 3"/><circle cx="8" cy="16.5" r="1.6" fill="currentColor"/><circle cx="16" cy="16.5" r="1.6" fill="currentColor"/><path d="M5 19v1M19 19v1"/></svg>',
+ train:'<svg class="mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 20l2-3M16 20l-2-3"/><circle cx="9" cy="14" r="1" fill="currentColor"/><circle cx="15" cy="14" r="1" fill="currentColor"/></svg>',
+ plane:'<svg class="mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 13l8-1 5-8h2l-2 8 5-.5 1.5-2.5H23l-1 4 1 4h-1.5L20 14.5 15 14l2 8h-2l-5-8-8-1z"/></svg>',
+ bus:'<svg class="mode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="3" width="16" height="15" rx="2"/><path d="M4 11h16M7 21v-3M17 21v-3"/><circle cx="8" cy="14.5" r="1" fill="currentColor"/><circle cx="16" cy="14.5" r="1" fill="currentColor"/></svg>'
+};
+const MI={walk:"walk",taxi:"taxi",ride:"taxi",mrt:"train",thsr:"train",train:"train",plane:"plane",bus:"bus"};
+const WL={sun:"해",cloud:"구름",rain:"비"};
+
+/* 저장(내 폰에만) */
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+/* 현재 날씨: Open-Meteo(무료·키 없음)에서 지금 기온·날씨 + 오늘 최저/최고를 받아옴 */
+const CITY={"서울":{lat:37.57,lon:126.98},"타이베이":{lat:25.05,lon:121.53},"타이중":{lat:24.15,lon:120.67}};
+const CITIES=Object.keys(CITY);
+let NOW=(store.get("tw-now")||{}); // {도시:{t,temp,w,lo,hi,pop}}
+let cityPick=null; // 눌러서 고른 도시 (새로 열면 자동으로 돌아감)
+let MYLOC=store.get("tw-loc"); // 내 위치 {lat,lon,name,t}
+let locMsg="";
+const ME="내 위치";
+const locFresh=()=>MYLOC&&Date.now()-MYLOC.t<6*3600*1000;
+const cityList=()=>MYLOC?[ME,...CITIES]:CITIES;
+const coordsOf=c=>c===ME?MYLOC:CITY[c];
+const nameOf=c=>c===ME?(MYLOC&&MYLOC.name||ME):c;
+const codeToW=c=>c<=1?"sun":(c<=48?"cloud":"rain");
+function autoCity(){ // 일정 기준으로 지금 있을 도시
+  const n=nowInfo();
+  if(n.iso<"2026-11-12")return "서울";
+  if(n.iso==="2026-11-12")return n.min>=10*60?"타이베이":"서울";
+  if(n.iso<"2026-11-14")return "타이베이";
+  if(n.iso==="2026-11-14")return n.min>=17*60?"타이중":"타이베이";
+  if(n.iso==="2026-11-15")return n.min>=21*60?"서울":"타이중";
+  return "서울";
+}
+const curCity=()=>cityPick||(locFresh()?ME:autoCity());
+let wxFail=false;
+async function fetchNow(city,force){
+  const old=NOW[city]; if(!force&&old&&Date.now()-old.t<15*60*1000)return;
+  try{
+    const c=coordsOf(city); if(!c)throw 0;
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=1`;
+    const r=await fetch(url); if(!r.ok)throw 0; const j=await r.json();
+    NOW[city]={t:Date.now(),temp:Math.round(j.current.temperature_2m),w:codeToW(j.current.weather_code),
+      lo:Math.round(j.daily.temperature_2m_min[0]),hi:Math.round(j.daily.temperature_2m_max[0]),
+      pop:j.daily.precipitation_probability_max?j.daily.precipitation_probability_max[0]:null};
+    store.set("tw-now",NOW); wxFail=false;
+  }catch(e){wxFail=true}
+  renderWx();
+}
+function renderWx(){
+  const key=curCity(); const city=nameOf(key); const w=NOW[key]; const g=`https://www.google.com/search?q=${enc((key===ME?"현재 위치":city)+" 날씨")}`;
+  let chip;
+  if(w){
+    const t=new Date(w.t);
+    chip=`<button class="wx-chip" id="wxchip" aria-label="${city} 현재 ${WL[w.w]} ${w.temp}도. 눌러서 도시 바꾸기">${IC[w.w]}<div><div class="wx-city">${city} 지금 · ${WL[w.w]}</div><div class="wx-t"><span class="wx-now">${w.temp}°</span> <span class="wx-lh">${w.lo}° / ${w.hi}°</span></div></div></button>
+    <div class="wx-note">${w.pop!=null?`비 올 확률 ${w.pop}% · `:""}${p2(t.getHours())}:${p2(t.getMinutes())} 기준${wxFail?" (최신 아님)":""} · <a href="${g}" target="_blank" rel="noopener">자세히</a></div>`;
+  }else{
+    chip=`<button class="wx-chip" id="wxchip" aria-label="${city} 날씨. 눌러서 도시 바꾸기">${IC.cloud}<div><div class="wx-city">${city} 지금</div><div class="wx-t">${wxFail?"불러오지 못함":"불러오는 중…"}</div></div></button>
+    <div class="wx-note">${wxFail?"인터넷 연결을 확인하세요 · ":""}<a href="${g}" target="_blank" rel="noopener">구글에서 보기</a></div>`;
+  }
+  $("wx").innerHTML=chip;
+  renderLoc();
+  renderPot();
+}
+function renderLoc(){
+  const b=$("locbtn"); if(!b)return;
+  b.innerHTML=IC.pin+(MYLOC?"위치 새로고침":"내 위치 불러오기");
+  let t="";
+  if(locMsg) t=locMsg;
+  else if(MYLOC){const d=new Date(MYLOC.t);t=`지금 위치 · <b>${esc(MYLOC.name)}</b> (${p2(d.getHours())}:${p2(d.getMinutes())})`}
+  $("loctxt").innerHTML=t;
+}
+async function placeName(lat,lon){
+  try{
+    const r=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ko`);
+    if(!r.ok)throw 0; const d=await r.json();
+    const parts=[d.city||d.principalSubdivision,d.locality].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i);
+    if(parts.length)return parts.join(" ");
+  }catch(e){}
+  return `${lat.toFixed(3)}, ${lon.toFixed(3)}`;
+}
+function getLoc(silent){
+  if(!navigator.geolocation){locMsg="이 브라우저는 위치를 못 받아요";renderLoc();return}
+  if(!silent){locMsg="위치 찾는 중…";renderLoc();}
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const lat=pos.coords.latitude, lon=pos.coords.longitude;
+    const name=await placeName(lat,lon);
+    MYLOC={lat,lon,name,t:Date.now()}; store.set("tw-loc",MYLOC);
+    locMsg=""; cityPick=null; delete NOW[ME]; renderWx(); fetchNow(ME,true);
+  },err=>{
+    if(silent)return;
+    locMsg=err.code===1?"위치 허용이 꺼져 있어요 · 브라우저 설정에서 허용해 주세요":"위치를 못 찾았어요 · 파일을 브라우저로 열었는지 확인해 주세요";
+    renderLoc();
+  },{enableHighAccuracy:false,timeout:15000,maximumAge:5*60*1000});
+}
+
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+
+function pickStart(){
+  const today=new Date(); const iso=today.getFullYear()+"-"+String(today.getMonth()+1).padStart(2,"0")+"-"+String(today.getDate()).padStart(2,"0");
+  const hit=DAYS.find(d=>d.date===iso); if(hit) return hit.n;
+  const saved=store.get("tw-day"); return DAYS.some(d=>d.n===saved)?saved:1;
+}
+let cur=pickStart();
+let editing=false;
+
+function renderTabs(){
+  $("tabs").innerHTML=DAYS.map(d=>{const [y,m,dd]=d.date.split("-");return `<button class="tab" role="tab" id="tab${d.n}" aria-selected="${d.n===cur}" data-n="${d.n}"><b>${d.n}일차</b><span>${+m}/${+dd} ${d.dow}</span></button>`}).join("");
+}
+function renderHead(){
+  const d=DAYS.find(x=>x.n===cur); const [y,m,dd]=d.date.split("-");
+  const nw=nowInfo(); const t=new Date();
+  const trip=DAYS.find(x=>x.date===nw.iso);
+  const days=Math.round((new Date(DAYS[0].date+"T00:00:00")-new Date(nw.iso+"T00:00:00"))/86400000);
+  $("dayno").innerHTML=trip?`${trip.n}<small>일차</small>`:(days>0?`D-${days}`:`여행 끝`);
+  $("date").innerHTML=`<span>오늘 ${t.getMonth()+1}월 ${t.getDate()}일 ${"일월화수목금토"[t.getDay()]}요일</span><span class="clock-pill">지금 <span class="clock">${nw.hm}</span></span>`;
+  $("route").innerHTML=`<b>${d.n}일차 · ${+m}/${+dd} ${d.dow}</b>${esc(d.route)}`;
+  renderWx();
+}
+function link(it){return it.link||(it.q?S(it.q):null)}
+/* '길찾기' = 지금 위치에서 출발 (구글맵이 출발지를 현재 위치로 잡아줌) */
+const DQ={"시먼딩":"西門町","에어비앤비 체크인":"台北車站","숙소 도착":"台北車站","숙소 출발":"台北車站","숙소":"台北車站",
+ "다다오청 부두 컨테이너 마켓":"大稻埕碼頭","훠거 · 황지아 훠궈":"黃家火鍋 萬華","용산사":"龍山寺 台北","린안타이 고택":"林安泰古厝",
+ "융캉제":"永康街","베이터우 온천 마을":"北投公園","지열곡 근처 가벼운 식사":"地熱谷","스펀":"十分老街","중정기념관":"中正紀念堂",
+ "취월루":"宮原眼科","타이중 시내 투어":"宮原眼科","점심 + 쇼핑 마무리":"台北車站","까르푸 → 시먼딩 → 돈키호테":"家樂福 桂林店",
+ "디화제 · 다다오청":"迪化街","장씨 우육면":"張記鍋貼牛肉麵","무위초당":"無為草堂"};
+const NODIR=["술 한잔 (아직 미정)","아침식사 (아직 미정)","집 도착","인천공항 출발"];
+function destOf(it){ if(NODIR.includes(it.name))return null; return DQ[it.name]||it.q||null }
+const GO=dst=>"https://www.google.com/maps/dir/?api=1&destination="+enc(dst)+"&travelmode=transit";
+const p2=x=>String(x).padStart(2,"0");
+function nowInfo(){const n=new Date();return{iso:n.getFullYear()+"-"+p2(n.getMonth()+1)+"-"+p2(n.getDate()),min:n.getHours()*60+n.getMinutes(),hm:p2(n.getHours())+":"+p2(n.getMinutes())}}
+const APPROX={"아침":480,"오전":600,"점심":720,"저녁":1080,"밤":1260};
+/* 각 칸이 지난 일정인지 계산: 시작한 장소 중 마지막 = 지금, 그 앞 = 지난 일정 */
+function statusOf(d){
+  const nw=nowInfo(); const st=d.items.map(()=>"");
+  if(d.date<nw.iso) return st.map(()=>"past");
+  if(d.date>nw.iso) return st;
+  let prev=0; const eff=d.items.map(it=>{if(it.tr)return null;const m=/^(\d{1,2}):(\d{2})$/.exec(it.t||"");let v=m?(+m[1])*60+(+m[2]):(APPROX[it.t]??prev+30);v=Math.max(v,prev);prev=v;return v});
+  let curI=-1; d.items.forEach((it,i)=>{if(!it.tr&&eff[i]<=nw.min)curI=i});
+  d.items.forEach((it,i)=>{
+    if(!it.tr){ if(i<curI)st[i]="past"; else if(i===curI)st[i]="now"; }
+    else { let j=i+1; while(j<d.items.length&&d.items[j].tr)j++; if(j<=curI)st[i]="past"; }
+  });
+  return st;
+}
+let scrolled=false;
+function renderTL(){
+  const d=DAYS.find(x=>x.n===cur); let h=""; let ti=0;
+  const stt=statusOf(d);
+  d.items.forEach((it,idx)=>{
+    const sc=stt[idx]?" "+stt[idx]:"";
+    if(it.tr){
+      const mv=M.items[cur+"-"+idx]; const label=`<b>${ML[it.tr]}</b>${it.dur?" · "+esc(it.dur):""}${it.cost?" · "+esc(it.cost):""}${mv&&+mv.amt>0?` · <span class="amt-badge">${fmt(mv.amt)}달러 씀</span>`:""}`;
+      if(it.o){
+        const id=`tp${cur}-${ti++}`; const url=D(it.o,it.d,GM[it.tr]);
+        h+=`<div class="tr${sc}"><button class="tr-btn" aria-expanded="false" aria-controls="${id}">${IC[MI[it.tr]]}<span class="tr-txt">${label}</span><span class="chev">${IC.chev}</span></button>
+        <div class="tr-panel" id="${id}" hidden>
+          <div class="strip"><span class="sd"></span><span>${esc(it.oL)}${it.st?" <span class='tip'>(가까운 역)</span>":""}</span><span class="sl"></span><span></span><span class="sd end"></span><span>${esc(it.dL)}${it.st?" <span class='tip'>(가까운 역)</span>":""}</span></div>
+          <a class="gm" href="${url}" target="_blank" rel="noopener">${IC.nav}구글맵 길찾기</a>
+          ${it.st?`<div class="tip">지금 위치에서 가장 가까운 역 → 다음 장소에서 가장 가까운 역으로 검색돼요.</div>`:""}
+          ${moneyRow(cur+"-"+idx,"교통비")}
+        </div></div>`;
+      } else if(it.link){
+        h+=`<div class="tr${sc}"><div class="tr-static">${IC[MI[it.tr]]}<span>${label} · <a href="${it.link}" target="_blank" rel="noopener" style="color:var(--accent)">${esc(it.linkL)}</a></span></div></div>`;
+      } else {
+        h+=`<div class="tr${sc}"><div class="tr-static">${IC[MI[it.tr]]}<span>${label}</span></div></div>`;
+      }
+      return;
+    }
+    const u=link(it);
+    const ex=(it.ex||[]).map(e=>{const eu=link(e);return `<a class="ex" href="${eu}" target="_blank" rel="noopener"><span class="ex-k" style="background:${KC[e.k]}"></span><span class="ex-t">${esc(e.name)}${e.d?`<span class="ex-d">${esc(e.d)}</span>`:""}</span><span class="arrow">지도 ›</span></a>`}).join("");
+    h+=`<div class="stop k-${it.k}${sc}"${stt[idx]==="now"?' id="nowstop"':""}><span class="dot" aria-hidden="true"></span><div class="card">
+      <div class="s-head"><div class="s-main">
+        <div class="s-meta">${it.t?`<span class="s-time">${esc(it.t)}</span>`:""}<span class="kpill">${KL[it.k]}</span>${stt[idx]==="now"?'<span class="now-badge">지금</span>':""}</div>
+        <div class="s-name">${esc(it.name)}</div>
+        ${it.sub?`<div class="s-sub">${esc(it.sub)}</div>`:""}
+        ${it.note?`<div class="s-note">${esc(it.note)}</div>`:""}
+        ${it.tags?`<div class="tags">${it.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>`:""}
+      </div>${(()=>{const dst=destOf(it);if(!u&&!dst)return"";return `<div class="s-act">${u?`<a class="maplink" href="${u}" target="_blank" rel="noopener" aria-label="${esc(it.name)} 구글맵">${IC.pin}지도</a>`:""}${dst?`<a class="maplink go" href="${GO(dst)}" target="_blank" rel="noopener" aria-label="지금 위치에서 ${esc(it.name)}까지 길찾기">${IC.nav}길찾기</a>`:""}</div>`})()}</div>
+      ${ex?`<div class="extras">${it.exLabel?`<div class="ex-label">${esc(it.exLabel)}</div>`:""}${ex}</div>`:""}
+      ${moneyRow(cur+"-"+idx)}
+    </div></div>`;
+  });
+  $("tl").innerHTML=h;
+  if(!scrolled){scrolled=true;const ns=$("nowstop");if(ns)setTimeout(()=>ns.scrollIntoView({block:"center"}),50)}
+}
+/* 1분마다 시계와 지난 일정 다시 계산 (펼친 이동 칸은 그대로 유지) */
+setInterval(()=>{
+  const ae=document.activeElement; if(ae&&ae.matches&&ae.matches('input,select')){renderHead();return}
+  const open=[...document.querySelectorAll('.tr-btn[aria-expanded="true"]')].map(b=>b.getAttribute("aria-controls"));
+  renderHead();
+  if(!editing){renderTL();open.forEach(id=>{const p=$(id);if(p){p.hidden=false;const b=document.querySelector(`[aria-controls="${id}"]`);if(b)b.setAttribute("aria-expanded","true")}})}
+},30000);
+/* 금액 기록 · 정산 (이 폰에만 저장) */
+let M=Object.assign({members:["승은","경은","은경"],rate:40.7,items:{},extra:[],pot:{per:"",n:3}},store.get("tw-money")||{});
+if(!M.pot)M.pot={per:"",n:M.members.length};
+let potEditing=false;
+const POT=-1;
+const potOn=()=>+M.pot.per>0;
+const defPayer=()=>POT;
+const payerName=i=>i===POT?"공금":M.members[i];
+const saveM=()=>store.set("tw-money",M);
+let settleOpen=false, clearArm=false;
+const fmt=n=>Math.round(n).toLocaleString("ko-KR");
+const won=n=>fmt(n*(+M.rate||0));
+function memberOpts(sel){return M.members.map((m,i)=>`<option value="${i}"${+sel===i?" selected":""}>${esc(m)}</option>`).join("")+`<option value="${POT}"${+sel===POT?" selected":""}>공금</option>`}
+function moneyRow(key,label){
+  const v=M.items[key]||{}; const a=v.amt??"";
+  return `<div class="money"><span>${label||"쓴 돈"}</span><input type="number" inputmode="decimal" min="0" placeholder="0" aria-label="금액(대만 달러)" data-amt="${key}" value="${a}"><span>달러</span>
+  <span class="won" data-won="${key}">${a?`≈ ${won(a)}원`:""}</span><select class="st-sel" aria-label="낸 사람" data-payer="${key}">${memberOpts(v.payer??defPayer())}</select><span>이 냄</span></div>`;
+}
+function allEntries(){
+  const out=[];
+  DAYS.forEach(d=>d.items.forEach((it,i)=>{const v=M.items[d.n+"-"+i];if(v&&+v.amt>0)out.push({day:d.n,name:it.tr?`${ML[it.tr]}${it.dL?" → "+it.dL:""}`:it.name,amt:+v.amt,payer:+(v.payer??defPayer())})}));
+  M.extra.forEach(x=>{if(+x.amt>0)out.push({day:0,name:x.name||"기타",amt:+x.amt,payer:+(x.payer??defPayer())})});
+  return out.map(e=>Object.assign(e,{payer:e.payer===POT||e.payer<M.members.length?e.payer:0}));
+}
+function potInfo(){
+  const rate=+M.rate||1; const n=+M.pot.n||M.members.length||1;
+  const krw=(+M.pot.per||0)*10000*n; const twd=krw/rate;
+  const spent=allEntries().filter(e=>e.payer===POT).reduce((a,e)=>a+e.amt,0);
+  return {n,krw,twd,spent,left:twd-spent};
+}
+function renderPot(){
+  const box=$("potbox"); if(!box)return;
+  if(potEditing){
+    box.innerHTML=`<div class="pot"><div class="pot-lbl">공금 (각자 걷은 돈)</div><div class="pot-form">1인당 <input id="potper" type="number" inputmode="decimal" min="0" value="${esc(M.pot.per)}" aria-label="1인당 금액(만원)"> 만원 × <input id="potn" type="number" inputmode="numeric" min="1" value="${esc(M.pot.n)}" aria-label="인원"> 명 <button class="btn-sm" id="potdone">저장</button></div></div>`;
+    return;
+  }
+  if(!potOn()){box.innerHTML=`<button class="pot-start" id="potedit">+ 공금 입력하기 (1인당 ○만원)</button>`;return}
+  const p=potInfo(); const pct=p.twd>0?Math.max(0,Math.min(100,p.left/p.twd*100)):0;
+  box.innerHTML=`<div class="pot"><div class="pot-top"><span class="pot-lbl">공금 남은 돈</span><button class="pot-edit" id="potedit">수정</button></div>
+  <div class="pot-top"><span class="pot-left${p.left<0?" neg":""}">${fmt(p.left)}<small style="font-size:14px">달러</small></span><span class="pot-sub">≈ ${won(p.left)}원</span></div>
+  <div class="pot-bar" role="img" aria-label="공금 ${Math.round(pct)}% 남음"><i style="width:${pct}%"></i></div>
+  <div class="pot-sub">${+M.pot.per}만원 × ${p.n}명 = ${fmt(p.krw)}원 (${fmt(p.twd)}달러) 중 ${fmt(p.spent)}달러 씀</div></div>`;
+}
+function settleCalc(){
+  const all=allEntries(); const es=all.filter(e=>e.payer!==POT); const n=M.members.length||1;
+  const total=es.reduce((a,e)=>a+e.amt,0); const share=total/n;
+  const p=potInfo();
+  const paid=M.members.map((_,i)=>es.filter(e=>e.payer===i).reduce((a,e)=>a+e.amt,0));
+  const bal=paid.map(p=>p-share);
+  const cr=bal.map((b,i)=>({i,b})).filter(x=>x.b>0.5).sort((a,b)=>b.b-a.b);
+  const db=bal.map((b,i)=>({i,b:-b})).filter(x=>x.b>0.5).sort((a,b)=>b.b-a.b);
+  const tx=[]; let ci=0,di=0;
+  while(ci<cr.length&&di<db.length){const v=Math.min(cr[ci].b,db[di].b);tx.push({from:db[di].i,to:cr[ci].i,v});cr[ci].b-=v;db[di].b-=v;if(cr[ci].b<=0.5)ci++;if(db[di].b<=0.5)di++;}
+  const byDay=[1,2,3,4,0].map(k=>({k,s:all.filter(e=>e.day===k).reduce((a,e)=>a+e.amt,0)}));
+  return {es,all,total,share,paid,bal,tx,byDay,p};
+}
+function renderSettle(){
+  const box=$("settle"); if(!box)return;
+  if(cur!==DAYS[DAYS.length-1].n){box.innerHTML="";return}
+  let h=`<button class="settle-btn" id="settlebtn" aria-expanded="${settleOpen}">${IC.coin}${settleOpen?"정산 닫기":"정산하기"}</button>`;
+  if(settleOpen){
+    h+=`<div class="st-panel">
+    <div class="st-sec"><h3>함께 가는 사람</h3><div class="st-note">일정 칸의 낸 사람에 이 이름들과 공금이 나와요</div>
+      ${M.members.map((m,i)=>`<div class="st-row"><input class="st-in st-grow" id="mem${i}" data-mem="${i}" value="${esc(m)}" aria-label="${i+1}번째 사람 이름">${M.members.length>1?`<button class="st-x" data-memdel="${i}" aria-label="${esc(m)} 빼기">×</button>`:""}</div>`).join("")}
+      <button class="st-add" id="memadd">+ 사람 추가</button></div>
+    <div class="st-sec"><h3>환율</h3><div class="st-row">1달러 = <input class="st-in st-num" id="rate" type="number" inputmode="decimal" step="0.1" value="${M.rate}"> 원 <span class="st-note">(10/27 기준 약 40.7원)</span></div></div>
+    <div class="st-sec"><h3>일정 밖 지출</h3><div class="st-note">쇼핑, 간식, 교통카드 충전처럼 일정 칸에 없는 돈</div>
+      ${M.extra.map((x,i)=>`<div class="st-row st-exrow"><input class="st-in st-grow" id="exn${i}" data-exn="${i}" value="${esc(x.name||"")}" placeholder="내용"><input class="st-in st-num" id="exa${i}" data-exa="${i}" type="number" inputmode="decimal" value="${x.amt??""}" placeholder="달러"><select class="st-sel" id="exp${i}" data-exp="${i}" aria-label="낸 사람">${memberOpts(x.payer??0)}</select><button class="st-x" data-exdel="${i}" aria-label="지우기">×</button></div>`).join("")}
+      <button class="st-add" id="exadd">+ 지출 추가</button></div>
+    <div class="st-sec" id="stres"></div>
+    <div class="st-foot"><button class="btn-sm" id="stcopy">결과 복사</button><button class="btn-sm" id="stclear">${clearArm?"한 번 더 누르면 모두 지워져요":"금액 모두 지우기"}</button></div>
+    <div class="st-sec"><h3>저장 내용 옮기기</h3><div class="st-note">다른 폰으로 옮기거나 백업할 때 써요. 공금, 이름, 환율, 모든 금액이 들어가요.</div>
+      <div class="st-foot" style="justify-content:flex-start"><button class="btn-sm" id="stexp">파일로 내보내기</button><button class="btn-sm" id="stcopyjson">글자로 복사</button><label class="btn-sm" for="stfile" style="display:inline-block">파일 불러오기</label><input type="file" id="stfile" accept=".json,application/json,text/plain" hidden><button class="btn-sm" id="stpastebtn">붙여넣기로 불러오기</button></div>
+      <div id="stpastebox" hidden style="display:grid;gap:6px"><textarea id="stpaste" rows="4" class="st-in" placeholder="복사한 글자를 여기에 붙여 넣으세요" style="width:100%;resize:vertical;font-size:12px"></textarea><button class="btn-sm" id="stpastego" style="justify-self:start">불러오기</button></div>
+    </div>
+    <div class="st-note" id="stmsg">적은 금액은 이 폰에만 저장돼요. 한 사람 폰에 몰아서 적으면 편해요.</div>
+    </div>`;
+  }
+  box.innerHTML=h;
+  renderStRes();
+}
+function renderStRes(){
+  const el=$("stres"); if(!el)return; const c=settleCalc(); const pp=c.p;
+  const potDay=[1,2,3,4,0].map(k=>({k,pot:c.all.filter(e=>e.day===k&&e.payer===POT).reduce((a,e)=>a+e.amt,0),me:c.all.filter(e=>e.day===k&&e.payer!==POT).reduce((a,e)=>a+e.amt,0)})).filter(x=>x.pot||x.me);
+  el.innerHTML=`<h3>결과</h3>
+    <div class="st-total"><span>공금 남은 돈<br><span class="st-note">${potOn()?`${+M.pot.per}만원 × ${pp.n}명 = ${fmt(pp.twd)}달러 중 ${fmt(pp.spent)}달러 씀`:`공금을 아직 안 적었어요 · 공금으로 ${fmt(pp.spent)}달러 씀`}</span></span><span><b>${fmt(pp.left)}</b> 달러</span></div>
+    ${potOn()?`<div class="st-note" style="text-align:right">${pp.left>=0?`남은 공금 1인당 <b style="color:var(--fg)">${fmt(pp.left/pp.n)}달러 (≈ ${won(pp.left/pp.n)}원)</b>씩 돌려받기`:`공금이 ${fmt(-pp.left)}달러 모자라요 · 1인당 <b style="color:var(--fg)">${fmt(-pp.left/pp.n)}달러 (≈ ${won(-pp.left/pp.n)}원)</b>씩 더 내기`}</div>`:""}
+    <div style="overflow-x:auto"><table class="st-table"><thead><tr><th>각자 쓴 돈</th><th>달러</th><th>원화</th></tr></thead><tbody>
+    ${M.members.map((m,i)=>`<tr><td>${esc(m)}</td><td>${fmt(c.paid[i])}달러</td><td>${won(c.paid[i])}원</td></tr>`).join("")}
+    <tr><td><b>공금</b></td><td><b>${fmt(pp.spent)}달러</b></td><td><b>${won(pp.spent)}원</b></td></tr>
+    </tbody></table></div>
+    <div style="overflow-x:auto"><table class="st-table"><thead><tr><th>날짜</th><th>공금</th><th>각자</th></tr></thead><tbody>
+    ${potDay.map(x=>`<tr><td>${x.k?x.k+"일차":"일정 밖"}</td><td>${fmt(x.pot)}달러</td><td>${fmt(x.me)}달러</td></tr>`).join("")||`<tr><td colspan="3" style="text-align:center;color:var(--muted)">아직 적은 금액이 없어요. 일정 칸의 쓴 돈에 금액을 적어 주세요.</td></tr>`}
+    </tbody></table></div>`;
+}
+function settleText(){
+  const c=settleCalc(); const pp=c.p;
+  let t=`[대만 여행 정산]\n공금: ${potOn()?`${fmt(pp.twd)}달러 중 `:""}${fmt(pp.spent)}달러 씀`;
+  if(potOn()) t+=` · 남은 돈 ${fmt(pp.left)}달러 (≈${won(pp.left)}원)\n1인당 ${pp.left>=0?"돌려받기":"더 내기"} ${fmt(Math.abs(pp.left)/pp.n)}달러 (≈${won(Math.abs(pp.left)/pp.n)}원)`;
+  t+="\n";
+  M.members.forEach((m,i)=>{t+=`${m}: ${fmt(c.paid[i])}달러 (≈${won(c.paid[i])}원)\n`});
+  return t+"© 돼지물고기들";
+}
+/* 금액 저장 내용 내보내기 / 불러오기 */
+const exportText=()=>JSON.stringify({app:"tw-trip-money",v:1,saved:new Date().toISOString(),data:M});
+function setMsg(t){const m=$("stmsg");if(m)m.textContent=t}
+function importText(txt){
+  try{
+    const j=JSON.parse(String(txt).trim()); const d=j&&j.app==="tw-trip-money"?j.data:j;
+    if(!d||!Array.isArray(d.members)||typeof d.items!=="object")throw 0;
+    M=Object.assign({members:["승은","경은","은경"],rate:40.7,items:{},extra:[],pot:{per:"",n:3}},d);
+    if(!M.pot)M.pot={per:"",n:M.members.length};
+    saveM(); renderPot(); renderTLKeep(); renderSettle(); setMsg("불러왔어요. 금액과 공금이 바뀌었어요.");
+  }catch(e){setMsg("불러오지 못했어요. 이 페이지에서 내보낸 파일이나 글자인지 확인해 주세요.")}
+}
+function render(){renderTabs();renderHead();renderTL();renderSettle()}
+
+document.addEventListener("click",e=>{
+  if(e.target.id==="potedit"){potEditing=true;renderPot();const i=$("potper");if(i)i.focus();return}
+  if(e.target.id==="potdone"){potEditing=false;saveM();renderPot();renderTLKeep();if(settleOpen)renderSettle();return}
+  if(e.target.closest("#settlebtn")){settleOpen=!settleOpen;clearArm=false;renderSettle();return}
+  if(e.target.id==="memadd"){M.members.push("친구"+(M.members.length+1));M.pot.n=M.members.length;saveM();renderSettle();renderTLKeep();return}
+  const md=e.target.closest("[data-memdel]"); if(md){const i=+md.dataset.memdel;M.members.splice(i,1);M.pot.n=M.members.length;
+    const fix=o=>{if(!o||o.payer===undefined)return;const p=+o.payer;if(p===POT)return;o.payer=p===i?0:(p>i?p-1:p)};Object.values(M.items).forEach(fix);M.extra.forEach(fix);saveM();renderSettle();renderTLKeep();return}
+  if(e.target.id==="exadd"){M.extra.push({name:"",amt:"",payer:defPayer()});saveM();renderSettle();return}
+  const xd=e.target.closest("[data-exdel]"); if(xd){M.extra.splice(+xd.dataset.exdel,1);saveM();renderSettle();return}
+  if(e.target.id==="stclear"){if(!clearArm){clearArm=true;renderSettle();return}M.items={};M.extra=[];clearArm=false;saveM();renderSettle();renderTLKeep();return}
+  if(e.target.id==="stexp"){
+    try{const blob=new Blob([exportText()],{type:"application/json"});const a=document.createElement("a");const d=new Date();
+      a.href=URL.createObjectURL(blob);a.download=`taiwan-money_${d.getMonth()+1}${p2(d.getDate())}_${p2(d.getHours())}${p2(d.getMinutes())}.json`;
+      document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);setMsg("파일을 내보냈어요. 다운로드 폴더를 확인해 주세요.");}
+    catch(err){setMsg("이 브라우저에선 파일 내보내기가 안 돼요. 글자로 복사를 써 주세요.")}
+    return}
+  if(e.target.id==="stcopyjson"){const t=exportText();try{navigator.clipboard.writeText(t).then(()=>setMsg("복사했어요. 카톡 등에 붙여 넣어 보내세요."),()=>{const b=$("stpastebox");b.hidden=false;$("stpaste").value=t;$("stpaste").select();setMsg("자동 복사가 안 돼서 아래 칸에 넣었어요. 길게 눌러 복사하세요.")})}catch(err){}return}
+  if(e.target.id==="stpastebtn"){const b=$("stpastebox");b.hidden=!b.hidden;if(!b.hidden)$("stpaste").focus();return}
+  if(e.target.id==="stpastego"){importText($("stpaste").value);return}
+  if(e.target.id==="stcopy"){const t=settleText();const msg=$("stmsg");const ok=()=>{if(msg)msg.textContent="결과를 복사했어요. 카톡에 붙여 넣으면 돼요."};
+    try{navigator.clipboard.writeText(t).then(ok,()=>{if(msg)msg.textContent=t})}catch(err){if(msg)msg.textContent=t}return}
+  const tab=e.target.closest(".tab"); if(tab){cur=+tab.dataset.n;store.set("tw-day",cur);editing=false;render();window.scrollTo({top:0});return}
+  const tb=e.target.closest(".tr-btn"); if(tb){const p=$(tb.getAttribute("aria-controls"));const open=tb.getAttribute("aria-expanded")==="true";tb.setAttribute("aria-expanded",!open);p.hidden=open;return}
+  if(e.target.closest("#locbtn")){getLoc(false);return}
+  if(e.target.closest("#wxchip")){const L=cityList();const c=curCity();cityPick=L[(L.indexOf(c)+1)%L.length];renderWx();fetchNow(cityPick,false);return}
+});
+/* 금액·정산 입력 처리 */
+function renderTLKeep(){const open=[...document.querySelectorAll('.tr-btn[aria-expanded="true"]')].map(b=>b.getAttribute("aria-controls"));renderTL();open.forEach(id=>{const p=$(id);if(p){p.hidden=false;const b=document.querySelector(`[aria-controls="${id}"]`);if(b)b.setAttribute("aria-expanded","true")}})}
+document.addEventListener("input",e=>{
+  const t=e.target;
+  if(t.dataset.amt){const k=t.dataset.amt;M.items[k]=Object.assign(M.items[k]||{payer:defPayer()},{amt:t.value});if(!t.value)delete M.items[k].amt;saveM();const w=document.querySelector(`[data-won="${k}"]`);if(w)w.textContent=t.value?`≈ ${won(t.value)}원`:"";renderPot();if(settleOpen)renderStRes();return}
+  if(t.dataset.mem!==undefined){const i=+t.dataset.mem;M.members[i]=t.value||("친구"+(i+1));saveM();document.querySelectorAll(`select option[value="${i}"]`).forEach(o=>o.textContent=M.members[i]);renderStRes();return}
+  if(t.id==="rate"){M.rate=t.value;saveM();renderStRes();renderPot();return}
+  if(t.id==="potper"){M.pot.per=t.value;saveM();return}
+  if(t.id==="potn"){M.pot.n=t.value;saveM();return}
+  if(t.dataset.exn!==undefined){M.extra[+t.dataset.exn].name=t.value;saveM();return}
+  if(t.dataset.exa!==undefined){M.extra[+t.dataset.exa].amt=t.value;saveM();renderStRes();renderPot();return}
+});
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(t.id==="stfile"){const f=t.files&&t.files[0];if(!f)return;const r=new FileReader();r.onload=()=>importText(r.result);r.onerror=()=>setMsg("파일을 읽지 못했어요.");r.readAsText(f);t.value="";return}
+  if(t.dataset.payer){const k=t.dataset.payer;M.items[k]=Object.assign(M.items[k]||{},{payer:+t.value});saveM();}
+  if(t.dataset.exp!==undefined){M.extra[+t.dataset.exp].payer=+t.value;saveM();}
+  renderPot();
+  if(settleOpen)renderStRes();
+});
+render();
+fetchNow(curCity(),false);
+renderLoc();
+try{navigator.permissions&&navigator.permissions.query({name:"geolocation"}).then(r=>{if(r.state==="granted")getLoc(true)}).catch(()=>{})}catch(e){}
+setInterval(()=>fetchNow(curCity(),true),15*60*1000);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")fetchNow(curCity(),false)});
+</script>
+
+</body>
+</html>
