@@ -169,6 +169,9 @@ button{font:inherit;color:inherit}
 .now .ex{background:var(--card)}
 .now .dot{box-shadow:0 0 0 2px var(--accent),0 0 0 7px var(--soft)}
 .foot{margin-top:28px;font-size:12px;color:var(--muted);display:grid;gap:4px}
+/* 숫자 칸의 위아래 화살표 숨기기 (폰에선 숫자 키패드만 뜸) */
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;appearance:none;margin:0}
 /* 공금 */
 #potbox{position:relative;display:grid;margin-top:16px}
 .pot{position:relative;margin-top:0;background:var(--glass);border-radius:14px;padding:9px 12px;display:grid;gap:6px}
@@ -193,6 +196,17 @@ button{font:inherit;color:inherit}
 .money-row input,.money-row select{background:var(--card)}
 .money-row input[type=number]{width:90px;font-variant-numeric:tabular-nums}
 .money .money-memo{flex:1 1 110px;min-width:0}
+.money-line{display:flex;align-items:center;gap:8px}
+.m-lab{display:inline-flex;align-items:center;gap:4px;color:var(--muted);font-size:12.5px}
+.m-lab svg{width:15px;height:15px}
+.m-add{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;margin-left:4px;border:0;border-radius:50%;background:var(--accent);color:var(--accent-fg);font-size:17px;line-height:1;cursor:pointer;padding:0}
+.m-del{font-size:18px;line-height:1}
+.money-tog{flex:1;display:flex;align-items:center;gap:8px;border:0;background:none;padding:0;cursor:pointer;color:var(--muted);font-size:12.5px;text-align:left}
+.money-tog svg{width:15px;height:15px}
+.money-tog .money-sum{flex:1;text-align:right}
+.money-tog .chev{display:flex;color:var(--accent);transition:transform .2s}
+.money-tog[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.money-body{display:grid;gap:6px}
 .money-add{justify-self:start;border:1px dashed var(--accent);background:none;color:var(--accent);border-radius:10px;padding:4px 10px;cursor:pointer;font-size:12px}
 .money .won{font-size:11.5px}
 .tr-panel .money{margin-top:0;border-top:0;padding-top:0}
@@ -557,7 +571,7 @@ function renderTL(){
           <div class="strip"><span class="sd"></span><span>${esc(it.oL)}${it.st?" <span class='tip'>(가까운 역)</span>":""}</span><span class="sl"></span><span></span><span class="sd end"></span><span>${esc(it.dL)}${it.st?" <span class='tip'>(가까운 역)</span>":""}</span></div>
           <a class="gm" href="${url}" target="_blank" rel="noopener">${IC.nav}구글맵 길찾기</a>
           ${it.st?`<div class="tip">지금 위치에서 가장 가까운 역 → 다음 장소에서 가장 가까운 역으로 검색돼요.</div>`:""}
-          ${moneyRow(cur+"-"+idx,"교통비")}
+          ${moneyRow(cur+"-"+idx,"교통비",false)}
         </div></div>`;
       } else if(it.link){
         h+=`<div class="tr${sc}"><div class="tr-static">${IC[MI[it.tr]]}<span>${label} · <a href="${it.link}" target="_blank" rel="noopener" style="color:var(--accent)">${esc(it.linkL)}</a></span></div></div>`;
@@ -608,19 +622,23 @@ let settleOpen=false, clearArm=false;
 const fmt=n=>Math.round(n).toLocaleString("ko-KR");
 const won=n=>fmt(n*(+M.rate||0));
 function memberOpts(sel){return M.members.map((m,i)=>`<option value="${i}"${+sel===i?" selected":""}>${esc(m)}</option>`).join("")+`<option value="${POT}"${+sel===POT?" selected":""}>공금</option>`}
-function moneyRow(key,label){
+const OPENM=new Set(); // 펼친 쓴 돈 칸
+function moneyRow(key,label,fold=true){
   const list=listOf(key); const rows=list.length?list:[{amt:"",payer:defPayer(),memo:""}];
-  const tot=sumOf(key);
-  return `<div class="money" data-mbox="${key}"><div class="money-head"><span>${label||"쓴 돈"}</span><span class="money-sum" data-msum="${key}">${sumText(key)}</span></div>
-  ${rows.map((e,j)=>{const id=key+"|"+j;return `<div class="money-row"><input type="number" inputmode="decimal" min="0" placeholder="0" aria-label="금액(대만 달러)" data-amt="${id}" value="${e.amt??""}"><span>달러</span><span class="won" data-won="${id}">${e.amt?`≈ ${won(e.amt)}원`:""}</span>
+  const open=!fold||OPENM.has(key); const lab=label||"쓴 돈";
+  const body=`${rows.map((e,j)=>{const id=key+"|"+j;return `<div class="money-row"><input type="number" inputmode="decimal" min="0" placeholder="0" aria-label="금액(대만 달러)" data-amt="${id}" value="${e.amt??""}"><span>달러</span><span class="won" data-won="${id}">${e.amt?`≈ ${won(e.amt)}원`:""}</span>
     <select class="st-sel" aria-label="낸 사람" data-payer="${id}">${memberOpts(e.payer??defPayer())}</select>
     <input class="money-memo" type="text" placeholder="메모 (예: 밀크티)" aria-label="메모" data-memo="${id}" value="${esc(e.memo||"")}">
-    ${list.length>1||(list.length===1&&j===0&&list[0].amt)?`<button class="st-x" data-mdel="${id}" aria-label="이 줄 지우기">×</button>`:""}</div>`}).join("")}
-  <button class="money-add" data-madd="${key}">+ 쓴 돈 추가</button></div>`;
+    ${list.length>1||(list.length===1&&j===0&&list[0].amt)?`<button class="st-x m-del" data-mdel="${id}" aria-label="이 줄 지우기">−</button>`:""}</div>`}).join("")}
+`;
+  if(!fold) return `<div class="money" data-mbox="${key}" data-mlabel="${lab}" data-mfold="0"><div class="money-head"><span class="m-lab">${lab}<button class="m-add" data-madd="${key}" aria-label="${lab} 추가">+</button></span><span class="money-sum" data-msum="${key}">${sumText(key)}</span></div>${body}</div>`;
+  return `<div class="money" data-mbox="${key}" data-mlabel="${lab}" data-mfold="1">
+    <div class="money-line"><span class="m-lab">${IC.coin}${lab}<button class="m-add" data-madd="${key}" aria-label="${lab} 추가">+</button></span><button class="money-tog" data-mtog="${key}" aria-expanded="${open}"><span class="money-sum" data-msum="${key}">${sumText(key)||"적기"}</span><span class="chev">${IC.chev}</span></button></div>
+    <div class="money-body"${open?"":" hidden"}>${body}</div></div>`;
 }
-function sumText(k){const L=listOf(k).filter(e=>+e.amt>0);if(L.length<2)return "";const t=sumOf(k);return `합계 ${fmt(t)}달러 · ≈ ${won(t)}원`}
-function updSum(k){const el=document.querySelector(`[data-msum="${k}"]`);if(el)el.textContent=sumText(k)}
-function rerenderMoney(key){const box=document.querySelector(`[data-mbox="${key}"]`);if(!box)return;const lab=box.querySelector(".money-head span").textContent;const tmp=document.createElement("div");tmp.innerHTML=moneyRow(key,lab);box.replaceWith(tmp.firstElementChild)}
+function sumText(k){const L=listOf(k).filter(e=>+e.amt>0);if(!L.length)return "";const t=sumOf(k);return `${fmt(t)}달러${L.length>1?` · ${L.length}건`:""} (≈ ${won(t)}원)`}
+function updSum(k){const el=document.querySelector(`[data-msum="${k}"]`);if(!el)return;const box=el.closest("[data-mbox]");el.textContent=sumText(k)||(box&&box.dataset.mfold==="1"?"적기":"")}
+function rerenderMoney(key){const box=document.querySelector(`[data-mbox="${key}"]`);if(!box)return;const tmp=document.createElement("div");tmp.innerHTML=moneyRow(key,box.dataset.mlabel,box.dataset.mfold==="1");box.replaceWith(tmp.firstElementChild)}
 const slot=(id,make)=>{const [k,j]=id.split("|");if(!Array.isArray(M.items[k]))M.items[k]=[];const L=M.items[k];while(L.length<=+j&&make)L.push({amt:"",payer:defPayer(),memo:""});return {k,e:L[+j]}};
 function allEntries(){
   const out=[];
@@ -724,7 +742,8 @@ function render(){renderTabs();renderHead();renderTL();renderSettle()}
 document.addEventListener("click",e=>{
   if(e.target.id==="potedit"){potEditing=true;renderPot();const i=$("potper");if(i)i.focus();return}
   if(e.target.id==="potdone"){potEditing=false;saveM();renderPot();renderTLKeep();if(settleOpen)renderSettle();return}
-  const ma=e.target.closest("[data-madd]"); if(ma){const k=ma.dataset.madd;if(!Array.isArray(M.items[k]))M.items[k]=[];if(!M.items[k].length)M.items[k].push({amt:"",payer:defPayer(),memo:""});M.items[k].push({amt:"",payer:defPayer(),memo:""});saveM();rerenderMoney(k);const ins=document.querySelectorAll(`[data-mbox="${k}"] [data-amt]`);if(ins.length)ins[ins.length-1].focus();return}
+  const mt=e.target.closest("[data-mtog]"); if(mt){const k=mt.dataset.mtog;const open=mt.getAttribute("aria-expanded")!=="true";if(open)OPENM.add(k);else OPENM.delete(k);mt.setAttribute("aria-expanded",open);const bd=mt.closest("[data-mbox]").querySelector(".money-body");bd.hidden=!open;if(open){const f=bd.querySelector("[data-amt]");if(f&&!f.value)f.focus()}return}
+  const ma=e.target.closest("[data-madd]"); if(ma){const k=ma.dataset.madd;if(!Array.isArray(M.items[k]))M.items[k]=[];const wasOpen=OPENM.has(k)||document.querySelector(`[data-mbox="${k}"]`).dataset.mfold==="0";if(!M.items[k].length)M.items[k].push({amt:"",payer:defPayer(),memo:""});if(wasOpen||M.items[k].some(x=>x.amt))M.items[k].push({amt:"",payer:defPayer(),memo:""});saveM();OPENM.add(k);rerenderMoney(k);const ins=document.querySelectorAll(`[data-mbox="${k}"] [data-amt]`);if(ins.length)ins[ins.length-1].focus();return}
   const mdl=e.target.closest("[data-mdel]"); if(mdl){const [k,j]=mdl.dataset.mdel.split("|");const L=listOf(k);L.splice(+j,1);saveM();rerenderMoney(k);renderPot();if(settleOpen)renderStRes();return}
   if(e.target.closest("#settlebtn")){settleOpen=!settleOpen;clearArm=false;renderSettle();return}
   if(e.target.id==="memadd"){M.members.push("친구"+(M.members.length+1));M.pot.n=M.members.length;saveM();renderSettle();renderTLKeep();return}
