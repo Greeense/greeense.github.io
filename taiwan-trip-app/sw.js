@@ -1,5 +1,5 @@
 // 대만여행 앱 창고지기: 앱 파일을 폰에 저장해 두고 인터넷 없이도 열리게 함
-const VERSION = "tw-trip-v4";           // 파일을 고치면 이 숫자를 v2, v3…로 올려 주세요
+const VERSION = "tw-trip-v6";           // 파일을 고치면 이 숫자를 v2, v3…로 올려 주세요
 const APP = ["./", "./index.html", "./manifest.json",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/maskable-512.png", "./icons/apple-touch-icon.png"];
 

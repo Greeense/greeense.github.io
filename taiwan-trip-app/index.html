@@ -55,29 +55,30 @@ button{font:inherit;color:inherit}
 
 /* 헤더 */
 .top{position:relative;z-index:5;background:var(--bg);padding-block:12px 8px}
-.hero{position:relative;overflow:hidden;border-radius:24px;padding:16px 16px 14px;color:var(--hero-fg);
+.hero{position:relative;overflow:hidden;border-radius:24px;padding:14px 16px 12px;display:flex;flex-wrap:wrap;align-items:center;column-gap:10px;row-gap:8px;color:var(--hero-fg);
   background:linear-gradient(135deg,var(--hero-a) 0%,var(--hero-b) 100%);box-shadow:var(--shadow)}
 .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:var(--glass);pointer-events:none}
 .hero::before{width:120px;height:120px;right:-40px;top:-50px;opacity:.5}
 .hero::after{width:60px;height:60px;left:46%;bottom:-34px;opacity:.45}
-.hd{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.hd-l{min-width:0}
+.hd{flex:1 1 100%;min-width:0;position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.hd-l{flex:none;white-space:nowrap}
+.wx-chip{max-width:100%;min-width:0;overflow:hidden}.wx-chip>div{min-width:0}.wx-t,.wx-city{overflow:hidden;text-overflow:ellipsis}
 .kicker{font-size:12px;letter-spacing:.06em;opacity:.8}
-.dayno{font-family:var(--f-display);font-size:34px;line-height:1.05;margin-top:2px}
+.dayno{font-family:var(--f-display);font-size:30px;line-height:1.05;margin-top:0}
 .dayno small{font-size:18px;margin-left:2px}
-.date{font-size:13px;margin-top:6px;font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.date{flex:1 0 100%;font-size:13px;margin-top:-2px;font-variant-numeric:tabular-nums;display:flex;flex-wrap:nowrap;gap:6px;align-items:center;white-space:nowrap}
 .clock-pill{display:inline-flex;align-items:center;gap:4px;background:var(--glass);border-radius:999px;padding:1px 9px;font-weight:700}
 .clock-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
 .dayline{margin-top:14px;padding-bottom:8px;border-bottom:1px dotted var(--line);font-size:13px;color:var(--muted)}
 .dayline b{font-family:var(--f-display);font-weight:400;font-size:17px;color:var(--fg);margin-right:6px}
-.wx{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex:none}
+.wx{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex:0 1 auto;min-width:0}
 .wx-chip{display:flex;align-items:center;gap:6px;background:var(--glass);border:0;border-radius:16px;padding:6px 10px 6px 6px;cursor:pointer;text-align:left;color:var(--hero-fg);backdrop-filter:blur(6px)}
 .wx-chip svg{width:30px;height:30px;flex:none}
 .wx-city{font-size:11px;line-height:1.2;opacity:.85}
 .wx-t{font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap;font-family:var(--f-display)}
 .wx-now{font-size:22px}
 .wx-lh{font-size:12px;opacity:.8}
-.wx-note{font-size:10.5px;text-align:right;opacity:.85}
+.wx-note{font-size:10.5px;text-align:right;opacity:.85;word-break:keep-all}
 .wx-note a{font-weight:700}
 .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px;background:var(--card);border-radius:999px;padding:4px;box-shadow:var(--shadow)}
 .tab{border:0;background:none;border-radius:999px;padding:6px 2px;cursor:pointer;line-height:1.15}
@@ -127,7 +128,8 @@ button{font:inherit;color:inherit}
 .s-act{flex:none;display:flex;flex-direction:column;gap:5px;align-items:stretch}
 .s-act .maplink{justify-content:center}
 .maplink.go{background:var(--accent);color:var(--accent-fg)}
-.locrow{position:relative;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:12.5px}
+.locrow{position:relative;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:0;font-size:12.5px}
+.locrow:has(#loctxt:not(:empty)){flex:1 0 100%}
 .loc-btn{display:inline-flex;align-items:center;gap:4px;border:0;border-radius:999px;padding:4px 11px 4px 8px;background:var(--glass);color:var(--hero-fg);font-weight:700;cursor:pointer;font-size:12.5px}
 .loc-btn svg{width:14px;height:14px}
 #loctxt{min-width:0;opacity:.9}
@@ -173,7 +175,8 @@ button{font:inherit;color:inherit}
 input[type=number]{-moz-appearance:textfield;appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;appearance:none;margin:0}
 /* 공금 */
-#potbox{position:relative;display:grid;margin-top:16px}
+#potbox{position:relative;display:grid;margin-top:0}
+#potbox:has(.pot){flex:1 0 100%}
 .pot{position:relative;margin-top:0;background:var(--glass);border-radius:14px;padding:9px 12px;display:grid;gap:6px}
 .pot-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
 .pot-lbl{font-size:12px;opacity:.85}
@@ -246,12 +249,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <div class="hero">
     <div class="hd">
       <div class="hd-l">
-        <div class="kicker">TAIWAN 3박 4일 · 11/12 ~ 11/15</div>
+        <div class="kicker">TAIWAN 3박 4일</div>
         <div class="dayno" id="dayno"></div>
-        <div class="date" id="date"></div>
       </div>
       <div class="wx" id="wx"></div>
     </div>
+    <div class="date" id="date"></div>
     <div class="locrow"><button class="loc-btn" id="locbtn" type="button"></button><span id="loctxt"></span></div>
     <div id="potbox"></div>
     </div>
@@ -526,7 +529,7 @@ function renderHead(){
   const trip=DAYS.find(x=>x.date===nw.iso);
   const days=Math.round((new Date(DAYS[0].date+"T00:00:00")-new Date(nw.iso+"T00:00:00"))/86400000);
   $("dayno").innerHTML=trip?`${trip.n}<small>일차</small>`:(days>0?`D-${days}`:`여행 끝`);
-  $("date").innerHTML=`<span>오늘 ${t.getMonth()+1}월 ${t.getDate()}일 ${"일월화수목금토"[t.getDay()]}요일</span><span class="clock-pill">지금 <span class="clock">${nw.hm}</span></span>`;
+  $("date").innerHTML=`<span>${t.getMonth()+1}/${t.getDate()}(${"일월화수목금토"[t.getDay()]})</span><span class="clock-pill">지금 <span class="clock">${nw.hm}</span></span>`;
   $("route").innerHTML=`<b>${d.n}일차 · ${+m}/${+dd} ${d.dow}</b>${esc(d.route)}`;
   renderWx();
 }
@@ -658,7 +661,7 @@ function renderPot(){
     box.innerHTML=`<div class="pot"><div class="pot-lbl">공금 (각자 걷은 돈)</div><div class="pot-form">1인당 <input id="potper" type="number" inputmode="decimal" min="0" value="${esc(M.pot.per)}" aria-label="1인당 금액(만원)"> 만원 × <input id="potn" type="number" inputmode="numeric" min="1" value="${esc(M.pot.n)}" aria-label="인원"> 명 <button class="btn-sm" id="potdone">저장</button></div></div>`;
     return;
   }
-  if(!potOn()){box.innerHTML=`<button class="pot-start" id="potedit">+ 공금 입력하기 (1인당 ○만원)</button>`;return}
+  if(!potOn()){box.innerHTML=`<button class="pot-start" id="potedit">+ 공금 입력</button>`;return}
   const p=potInfo(); const pct=p.twd>0?Math.max(0,Math.min(100,p.left/p.twd*100)):0;
   box.innerHTML=`<div class="pot"><div class="pot-top"><span class="pot-lbl">공금 남은 돈</span><button class="pot-edit" id="potedit">수정</button></div>
   <div class="pot-top"><span class="pot-left${p.left<0?" neg":""}">${fmt(p.left)}<small style="font-size:14px">달러</small></span><span class="pot-sub">≈ ${won(p.left)}원</span></div>
