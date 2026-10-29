@@ -62,7 +62,7 @@ button{font:inherit;color:inherit}
 .hero::after{width:60px;height:60px;left:46%;bottom:-34px;opacity:.45}
 .hd{flex:1 1 100%;min-width:0;position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .hd-l{flex:none;white-space:nowrap}
-.wx-chip{max-width:100%;min-width:0;overflow:hidden}.wx-chip>div{min-width:0}.wx-t,.wx-city{overflow:hidden;text-overflow:ellipsis}
+.wx-chip{max-width:100%;min-width:0;overflow:hidden}.wx-only{padding:6px 14px 6px 8px;gap:8px}.wx-only .wx-now{font-size:26px;line-height:1}.wx-chip>div{min-width:0}.wx-t,.wx-city{overflow:hidden;text-overflow:ellipsis}
 .kicker{font-size:12px;letter-spacing:.06em;opacity:.8}
 .dayno{font-family:var(--f-display);font-size:30px;line-height:1.05;margin-top:0}
 .dayno small{font-size:18px;margin-left:2px}
@@ -129,10 +129,11 @@ button{font:inherit;color:inherit}
 .s-act .maplink{justify-content:center}
 .maplink.go{background:var(--accent);color:var(--accent-fg)}
 .locrow{position:relative;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:0;font-size:12.5px}
-.locrow:has(#loctxt:not(:empty)){flex:1 0 100%}
+.locrow:has(#loctxt:not(:empty)){flex:1 1 100%;min-width:0;flex-wrap:nowrap}
+#loctxt{display:block;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.loc-btn{flex:none}
 .loc-btn{display:inline-flex;align-items:center;gap:4px;border:0;border-radius:999px;padding:4px 11px 4px 8px;background:var(--glass);color:var(--hero-fg);font-weight:700;cursor:pointer;font-size:12.5px}
 .loc-btn svg{width:14px;height:14px}
-#loctxt{min-width:0;opacity:.9}
+#loctxt{display:block;flex:0 1 auto;min-width:0;opacity:.9}
 .extras{margin-top:10px;display:grid;gap:6px}
 .ex{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;text-decoration:none;background:var(--bg)}
 .ex .ex-k{flex:none;width:8px;height:8px;border-radius:50%}
@@ -464,15 +465,8 @@ async function fetchNow(city,force){
 }
 function renderWx(){
   const key=curCity(); const city=nameOf(key); const w=NOW[key]; const g=`https://www.google.com/search?q=${enc((key===ME?"현재 위치":city)+" 날씨")}`;
-  let chip;
-  if(w){
-    const t=new Date(w.t);
-    chip=`<button class="wx-chip" id="wxchip" aria-label="${city} 현재 ${WL[w.w]} ${w.temp}도. 눌러서 도시 바꾸기">${IC[w.w]}<div><div class="wx-city">${city} 지금 · ${WL[w.w]}</div><div class="wx-t"><span class="wx-now">${w.temp}°</span> <span class="wx-lh">${w.lo}° / ${w.hi}°</span></div></div></button>
-    <div class="wx-note">${w.pop!=null?`비 올 확률 ${w.pop}% · `:""}${p2(t.getHours())}:${p2(t.getMinutes())} 기준${wxFail?" (최신 아님)":""} · <a href="${g}" target="_blank" rel="noopener">자세히</a></div>`;
-  }else{
-    chip=`<button class="wx-chip" id="wxchip" aria-label="${city} 날씨. 눌러서 도시 바꾸기">${IC.cloud}<div><div class="wx-city">${city} 지금</div><div class="wx-t">${wxFail?"불러오지 못함":"불러오는 중…"}</div></div></button>
-    <div class="wx-note">${wxFail?"인터넷 연결을 확인하세요 · ":""}<a href="${g}" target="_blank" rel="noopener">구글에서 보기</a></div>`;
-  }
+  const lab=w?`${city} ${WL[w.w]} ${w.temp}도`:`${city} 날씨 ${wxFail?"불러오지 못함":"불러오는 중"}`;
+  const chip=`<button class="wx-chip wx-only" id="wxchip" aria-label="${lab}. 눌러서 도시 바꾸기">${w?IC[w.w]:IC.cloud}<span class="wx-now">${w?w.temp+"°":"--°"}</span></button>`;
   $("wx").innerHTML=chip;
   renderLoc();
   renderPot();
@@ -482,7 +476,7 @@ function renderLoc(){
   b.innerHTML=IC.pin+(MYLOC?"위치 새로고침":"내 위치 불러오기");
   let t="";
   if(locMsg) t=locMsg;
-  else if(MYLOC){const d=new Date(MYLOC.t);t=`지금 위치 · <b>${esc(MYLOC.name)}</b> (${p2(d.getHours())}:${p2(d.getMinutes())})`}
+  else if(MYLOC){const d=new Date(MYLOC.t);t=`<b>${esc(MYLOC.name)}</b>`}
   $("loctxt").innerHTML=t;
 }
 async function placeName(lat,lon){
